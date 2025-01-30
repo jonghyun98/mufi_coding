@@ -10,8 +10,9 @@
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 body {
@@ -30,13 +31,32 @@ h1, h2, h3, h4, h5, h6, p {
   word-wrap: break-word;
 }
 
-.container {
-  @include mixins.container;
+// 섹션 공통 스타일
+.section {
   width: 100%;
-  max-width: 1920px;
-  padding: 0 40px;
+  min-height: 100vh;
+  padding: 80px 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  @include mixins.mobile {
+    padding: 60px 16px;
+  }
+}
+
+// 컨테이너 스타일
+.container {
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
+  padding: 0 20px;
   height: 100%;
+
+  @include mixins.mobile {
+    padding: 0 16px;
+  }
 }
 
 section {

@@ -24,34 +24,21 @@ export default {
     }
   },
   mounted() {
-    // Intersection Observer 설정
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // 각 섹션의 배경색에 따라 네비게이션바 스타일 변경
-            const sectionId = entry.target.id;
-            this.isDarkSection = this.getDarkSections().includes(sectionId);
-          }
-        });
-      },
-      {
-        threshold: 0.6
-      }
-    );
-
-    // 모든 섹션 관찰
-    document.querySelectorAll('section[id]').forEach(section => {
-      observer.observe(section);
-    });
+    // 섹션 변경 이벤트 리스너
+    window.addEventListener('section-change', (event) => {
+      const sectionId = event.detail.sectionId
+      this.isDarkSection = this.getDarkSections().includes(sectionId)
+    })
+  },
+  beforeUnmount() {
+    window.removeEventListener('section-change', this.handleSectionChange)
   },
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen
     },
     getDarkSections() {
-      // 어두운 배경색을 가진 섹션들의 ID
-      return ['hero', 'kiosk', 'reviews'];
+      return ['hero', 'kiosk', 'reviews']
     }
   }
 }

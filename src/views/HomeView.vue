@@ -52,28 +52,37 @@ export default {
     let sections = []
     let touchStartY = 0
     let scrollTimeout = null
+    let isLastSection = false
 
     const handleScroll = (event) => {
-      if (currentSection === sections.length - 1) {
-        return;
-      }
-
-      event.preventDefault()
-      
-      if (isScrolling) return
-      
       const now = Date.now()
-      if (now - lastScrollTime < 1000) return
-
+      if (isScrolling || now - lastScrollTime < 1000) return
       lastScrollTime = now
-      const delta = event.wheelDelta || -event.detail
 
-      if (delta < 0 && currentSection < sections.length - 1) {
-        currentSection++
-        smoothScroll(sections[currentSection])
-      } else if (delta > 0 && currentSection > 0) {
+      // 마지막 섹션에서 위로 스크롤할 때는 이벤트 처리
+      if (isLastSection && event.wheelDelta > 0) {
+        event.preventDefault()
         currentSection--
         smoothScroll(sections[currentSection])
+        isLastSection = false
+        return
+      }
+
+      // 마지막 섹션이 아닐 때는 모든 스크롤 이벤트 처리
+      if (!isLastSection) {
+        event.preventDefault()
+        const delta = event.wheelDelta || -event.detail
+
+        if (delta < 0 && currentSection < sections.length - 1) {
+          currentSection++
+          if (currentSection === sections.length - 1) {
+            isLastSection = true
+          }
+          smoothScroll(sections[currentSection])
+        } else if (delta > 0 && currentSection > 0) {
+          currentSection--
+          smoothScroll(sections[currentSection])
+        }
       }
     }
 
@@ -127,8 +136,27 @@ export default {
       window.addEventListener('touchstart', handleTouchStart, { passive: true })
       window.addEventListener('touchend', handleTouchEnd, { passive: true })
 
-      // Intersection Observer 설정
-      const observer = new IntersectionObserver((entries) => {
+      // Intersection Observer 설정 - 네비게이션 바 색상 변경용
+      const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const sectionId = entry.target.id
+            // TheNavbar 컴포넌트에 이벤트 발송
+            window.dispatchEvent(new CustomEvent('section-change', {
+              detail: { sectionId }
+            }))
+          }
+        })
+      }, {
+        threshold: 0.6
+      })
+
+      sections.forEach(section => {
+        navObserver.observe(section)
+      })
+
+      // 섹션 활성화 감지용 Observer
+      const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('active')
@@ -141,7 +169,7 @@ export default {
       })
 
       sections.forEach(section => {
-        observer.observe(section)
+        sectionObserver.observe(section)
       })
     })
 
@@ -158,49 +186,34 @@ export default {
 <style lang="scss" scoped>
 .home {
   width: 100%;
-  max-width: 1920px;
-  margin: 0 auto;
   background: white;
 }
 
 .sections-container {
-  height: 100vh;
-  overflow: hidden;
-  position: relative;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .section {
-  aspect-ratio: 1920/1080;
   width: 100%;
-  height: 100vh;
-  min-height: 1080px;
+  min-height: 100vh;
   position: relative;
-  padding-top: 0;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   display: flex;
   align-items: center;
+  justify-content: center;
 
   &:not(:first-of-type) {
     padding-top: 60px;
   }
 
   &:last-of-type {
-    min-height: auto;
-    height: auto;
     margin-bottom: 0;
   }
 }
 
-@media (max-width: 1920px) {
+@include mixins.mobile {
   .section {
-    height: 100vh;
-    min-height: auto;
-    aspect-ratio: auto;
-
-    &:last-of-type {
-      height: auto;
-    }
+    padding-top: 60px;
   }
 }
 </style>
