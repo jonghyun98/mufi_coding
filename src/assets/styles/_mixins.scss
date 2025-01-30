@@ -29,3 +29,8 @@
   margin: 0 auto;
   padding: 0 20px;
 }
+
+@mixin smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}

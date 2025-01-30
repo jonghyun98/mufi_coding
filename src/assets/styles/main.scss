@@ -12,8 +12,7 @@ body {
   color: vars.$dark-color;
   word-break: keep-all;
   word-wrap: break-word;
-  height: 100%;
-  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 h1, h2, h3, h4, h5, h6, p {
@@ -95,9 +94,11 @@ h2 {
   }
 }
 
-// 기존 스크롤 관련 스타일 제거
+// 스크롤 관련 스타일 수정
 html, body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  overflow-y: auto;
+  height: auto;
 }

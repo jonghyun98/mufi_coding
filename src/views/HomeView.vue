@@ -70,12 +70,16 @@ export default {
 <style lang="scss" scoped>
 .home {
   overflow-x: hidden;
+  overflow-y: auto; // 세로 스크롤 허용
   background: white;
+  min-height: 100vh;
+  width: 100%;
 }
 
 section {
   min-height: 100vh;
   position: relative;
   padding-top: 60px;
+  width: 100%;
 }
 </style>
