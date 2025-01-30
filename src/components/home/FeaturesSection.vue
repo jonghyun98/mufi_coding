@@ -33,6 +33,15 @@
           <h3>트렌디한 디자인</h3>
           <p>MZ세대를 위한 감각적인 프레임 디자인</p>
         </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" class="icon">
+              <path d="M21 10c0-3.87-3.13-7-7-7s-7 3.13-7 7c0 3.47 2.52 6.34 5.83 6.89V20H6v2h12v-2h-3.17v-3.11C18.48 16.34 21 13.47 21 10zm-7 5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
+            </svg>
+          </div>
+          <h3>대학 축제 전문</h3>
+          <p>다년간의 대학 축제 운영 노하우로 완벽한 행사 진행</p>
+        </div>
       </div>
     </div>
   </section>
@@ -47,7 +56,8 @@ export default {
 <style lang="scss" scoped>
 .features {
   padding: 5rem 0;
-  background: vars.$light-color;
+  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  color: white;
 
   h2 {
     text-align: center;
@@ -55,25 +65,29 @@ export default {
     margin-bottom: 3rem;
     word-break: keep-all;
     word-wrap: break-word;
+    color: white;
   }
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
 
 .feature-card {
-  background: white;
+  background: rgba(255, 255, 255, 0.1);
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   text-align: center;
   transition: transform 0.3s;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 
   &:hover {
     transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
   }
 
   .feature-icon {
@@ -83,14 +97,14 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(vars.$primary-color, 0.1);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;
     padding: 1rem;
 
     .icon {
       width: 32px;
       height: 32px;
-      fill: vars.$primary-color;
+      fill: white;
     }
   }
 
@@ -98,17 +112,25 @@ export default {
     margin-bottom: 1rem;
     word-break: keep-all;
     word-wrap: break-word;
+    color: white;
+    font-size: 1.5rem;
   }
 
   p {
     word-break: keep-all;
     word-wrap: break-word;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
   }
 }
 
 @include mixins.mobile {
   .features-grid {
     grid-template-columns: 1fr;
+  }
+
+  .feature-card {
+    margin: 0 1rem;
   }
 }
 </style> 

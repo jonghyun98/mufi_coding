@@ -1,180 +1,117 @@
 <template>
-  <div id="app">
-    <TheHeader />
-    <div class="fullpage-container">
-      <section class="fullpage-section" id="home">
-        <HeroSection />
-      </section>
-      <section class="fullpage-section" id="features">
-        <FeaturesSection />
-      </section>
-      <section class="fullpage-section" id="services">
-        <ServiceSection />
-      </section>
-      <section class="fullpage-section" id="contact">
-        <ContactSection />
-      </section>
-      <footer class="fullpage-section" id="footer">
-        <TheFooter />
-      </footer>
-    </div>
-    <nav class="section-nav">
-      <ul>
-        <li v-for="(section, index) in sections" :key="section.id">
-          <button 
-            :class="{ active: currentSection === index }"
-            @click="scrollToSection(section.id)"
-          ></button>
-        </li>
-      </ul>
-    </nav>
+  <div class="home">
+    <TheNavbar />
+    <HeroSection id="hero" class="section"/>
+    <FeaturesSection id="features" class="section"/>
+    <ServiceSection id="service" class="section"/>
+    <TheFooter />
   </div>
 </template>
 
 <script>
-import TheHeader from '@/components/layout/TheHeader.vue'
-import HeroSection from "@/components/home/HeroSection.vue"
-import FeaturesSection from "@/components/home/FeaturesSection.vue"
-import ServiceSection from "@/components/home/ServiceSection.vue"
-import ContactSection from "@/components/home/ContactSection.vue"
-import TheFooter from "@/components/layout/TheFooter.vue"
+import { onMounted, onBeforeUnmount } from 'vue'
+import HeroSection from '@/components/home/HeroSection.vue'
+import FeaturesSection from '@/components/home/FeaturesSection.vue'
+import ServiceSection from '@/components/home/ServiceSection.vue'
+import TheNavbar from '@/components/layout/TheNavbar.vue'
+import TheFooter from '@/components/layout/TheFooter.vue'
 
 export default {
-  name: "HomeView",
+  name: 'HomeView',
   components: {
-    TheHeader,
     HeroSection,
     FeaturesSection,
     ServiceSection,
-    ContactSection,
+    TheNavbar,
     TheFooter
   },
-  data() {
-    return {
-      sections: [
-        { id: 'home', name: '홈' },
-        { id: 'features', name: '특징' },
-        { id: 'services', name: '서비스' },
-        { id: 'contact', name: '문의하기' },
-        { id: 'footer', name: '푸터' }
-      ],
-      currentSection: 0,
-      isScrolling: false
-    }
-  },
-  mounted() {
-    this.setupIntersectionObserver()
-    window.addEventListener('wheel', this.handleWheel, { passive: false })
-  },
-  beforeUnmount() {
-    window.removeEventListener('wheel', this.handleWheel)
-  },
-  methods: {
-    setupIntersectionObserver() {
-      const options = {
-        root: null,
-        threshold: 0.5
-      }
+  setup() {
+    let handleScroll, handleTouchStart, handleTouchEnd
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const index = this.sections.findIndex(section => section.id === entry.target.id)
-            if (index !== -1) {
-              this.currentSection = index
-            }
-          }
+    onMounted(() => {
+      const sections = document.querySelectorAll('.section')
+      let isScrolling = false
+      let currentSection = 0
+      let lastScrollTime = Date.now()
+      
+      const smoothScroll = (target) => {
+        isScrolling = true
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
         })
-      }, options)
-
-      this.sections.forEach(section => {
-        const element = document.getElementById(section.id)
-        if (element) observer.observe(element)
-      })
-    },
-    handleWheel(e) {
-      if (this.isScrolling) return
-      e.preventDefault()
-
-      this.isScrolling = true
-      const direction = e.deltaY > 0 ? 1 : -1
-      const nextSection = this.currentSection + direction
-
-      if (nextSection >= 0 && nextSection < this.sections.length) {
-        this.scrollToSection(this.sections[nextSection].id)
-        this.currentSection = nextSection
+        setTimeout(() => {
+          isScrolling = false
+        }, 500) // 애니메이션 시간 더 단축
       }
 
-      setTimeout(() => {
-        this.isScrolling = false
-      }, 1000)
-    },
-    scrollToSection(id) {
-      const element = document.getElementById(id)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+      // 스크롤 이벤트 핸들러 - 디바운스 제거하고 쓰로틀링으로 변경
+      handleScroll = (event) => {
+        const now = Date.now()
+        if (isScrolling || now - lastScrollTime < 50) return // 쓰로틀링 간격 50ms
+        
+        lastScrollTime = now
+        const delta = event.wheelDelta || -event.detail
+
+        if (Math.abs(delta) > 10) { // 감도 더 증가
+          if (delta < 0 && currentSection < sections.length - 1) {
+            currentSection++
+            smoothScroll(sections[currentSection])
+          } else if (delta > 0 && currentSection > 0) {
+            currentSection--
+            smoothScroll(sections[currentSection])
+          }
+        }
       }
-    }
+
+      // 터치 이벤트도 더 민감하게 조정
+      let touchStartY = 0
+
+      handleTouchStart = (event) => {
+        touchStartY = event.touches[0].clientY
+      }
+
+      handleTouchEnd = (event) => {
+        const touchEndY = event.changedTouches[0].clientY
+        const delta = touchEndY - touchStartY
+
+        if (Math.abs(delta) > 20) { // 터치 감도 더 증가
+          if (delta < 0 && currentSection < sections.length - 1) {
+            currentSection++
+            smoothScroll(sections[currentSection])
+          } else if (delta > 0 && currentSection > 0) {
+            currentSection--
+            smoothScroll(sections[currentSection])
+          }
+        }
+      }
+
+      window.addEventListener('wheel', handleScroll, { passive: false })
+      window.addEventListener('touchstart', handleTouchStart, { passive: true })
+      window.addEventListener('touchend', handleTouchEnd, { passive: true })
+    })
+
+    onBeforeUnmount(() => {
+      if (handleScroll) window.removeEventListener('wheel', handleScroll)
+      if (handleTouchStart) window.removeEventListener('touchstart', handleTouchStart)
+      if (handleTouchEnd) window.removeEventListener('touchend', handleTouchEnd)
+    })
   }
 }
 </script>
 
-<style lang="scss">
-.fullpage-container {
+<style lang="scss" scoped>
+.home {
   height: 100vh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
+  overflow: hidden;
   scroll-behavior: smooth;
 }
 
-.fullpage-section {
-  height: 100vh;
-  scroll-snap-align: start;
+.section {
+  min-height: 100vh;
   position: relative;
-}
-
-.section-nav {
-  position: fixed;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 100;
-
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  li {
-    margin: 10px 0;
-  }
-
-  button {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    border: 2px solid vars.$primary-color;
-    background: transparent;
-    cursor: pointer;
-    padding: 0;
-    transition: all 0.3s ease;
-
-    &.active {
-      background: vars.$primary-color;
-      transform: scale(1.2);
-    }
-  }
-}
-
-@include mixins.mobile {
-  .fullpage-section {
-    height: auto;
-    min-height: 100vh;
-  }
-
-  .section-nav {
-    display: none;
-  }
+  overflow: hidden;
+  padding-top: 60px;
+  scroll-snap-align: start; // 스크롤 스냅 추가
 }
 </style>
