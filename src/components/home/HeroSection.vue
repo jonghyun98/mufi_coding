@@ -16,8 +16,7 @@ export default {
   name: 'HeroSection',
   computed: {
     heroBackgroundImage() {
-      // 임시 이미지 URL 사용
-      return 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=1920&q=80'
+      return '/mufi_coding/images/hero-bg.jpg' // public 폴더 기준 경로
     }
   }
 }

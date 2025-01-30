@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
 export default defineConfig({
-  base: '/',
+  base: '/mufi_coding/',
   plugins: [vue()],
   resolve: {
     alias: {
