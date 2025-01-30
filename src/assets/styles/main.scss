@@ -11,8 +11,9 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  min-height: 100vh;
+  height: 100%;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 body {
@@ -21,11 +22,7 @@ body {
   color: vars.$dark-color;
   word-break: keep-all;
   word-wrap: break-word;
-  overflow-y: auto;
-  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  height: auto;
-  min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6, p {

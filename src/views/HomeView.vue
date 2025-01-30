@@ -72,14 +72,12 @@ export default {
 <style lang="scss" scoped>
 .home {
   width: 100%;
+  min-height: 100%;
   background: white;
-  overflow-y: auto;
 }
 
 .sections-container {
   width: 100%;
-  height: auto;
-  position: relative;
 }
 
 .section {
