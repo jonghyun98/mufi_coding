@@ -49,44 +49,58 @@ export default {
     let lastScrollTime = 0
     let sections = []
     let touchStartY = 0
+    let scrollTimeout = null
 
     const handleScroll = (event) => {
+      // 기본 스크롤 동작 방지
+      event.preventDefault()
+      
+      if (isScrolling) return
+      
       const now = Date.now()
-      if (isScrolling || now - lastScrollTime < 800) return
-
+      if (now - lastScrollTime < 1000) return // 스크롤 간격 더 늘림
+      
       lastScrollTime = now
       const delta = event.wheelDelta || -event.detail
 
-      if (Math.abs(delta) > 30) {
-        if (delta < 0 && currentSection < sections.length - 1) {
-          currentSection++
-          smoothScroll(sections[currentSection])
-        } else if (delta > 0 && currentSection > 0) {
-          currentSection--
-          smoothScroll(sections[currentSection])
-        }
+      // 스크롤 방향에 따라 한 섹션씩만 이동
+      if (delta < 0 && currentSection < sections.length - 1) {
+        currentSection++
+        smoothScroll(sections[currentSection])
+      } else if (delta > 0 && currentSection > 0) {
+        currentSection--
+        smoothScroll(sections[currentSection])
       }
     }
 
     const smoothScroll = (target) => {
+      if (isScrolling) return
+      
       isScrolling = true
       target.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       })
-      setTimeout(() => {
+
+      // 스크롤 애니메이션 완료 후 상태 초기화
+      clearTimeout(scrollTimeout)
+      scrollTimeout = setTimeout(() => {
         isScrolling = false
-      }, 800)
+      }, 1000) // 스크롤 간격 조정
     }
 
     const handleTouchStart = (event) => {
+      if (isScrolling) return
       touchStartY = event.touches[0].clientY
     }
 
     const handleTouchEnd = (event) => {
+      if (isScrolling) return
+      
       const touchEndY = event.changedTouches[0].clientY
       const deltaY = touchEndY - touchStartY
 
+      // 터치 동작도 한 섹션씩만 이동하도록 수정
       if (Math.abs(deltaY) > 50) {
         if (deltaY < 0 && currentSection < sections.length - 1) {
           currentSection++
@@ -101,6 +115,11 @@ export default {
     onMounted(() => {
       sections = Array.from(document.querySelectorAll('.section'))
       
+      // passive: false로 설정하여 preventDefault 가능하도록 함
+      window.addEventListener('wheel', handleScroll, { passive: false })
+      window.addEventListener('touchstart', handleTouchStart, { passive: true })
+      window.addEventListener('touchend', handleTouchEnd, { passive: true })
+
       // Intersection Observer 설정
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -118,16 +137,13 @@ export default {
       sections.forEach(section => {
         observer.observe(section)
       })
-
-      window.addEventListener('wheel', handleScroll)
-      window.addEventListener('touchstart', handleTouchStart)
-      window.addEventListener('touchend', handleTouchEnd)
     })
 
     onBeforeUnmount(() => {
       if (handleScroll) window.removeEventListener('wheel', handleScroll)
       if (handleTouchStart) window.removeEventListener('touchstart', handleTouchStart)
       if (handleTouchEnd) window.removeEventListener('touchend', handleTouchEnd)
+      if (scrollTimeout) clearTimeout(scrollTimeout)
     })
   }
 }
@@ -138,6 +154,7 @@ export default {
   height: 100vh;
   overflow: hidden;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; // iOS 스크롤 개선
 }
 
 .section {
