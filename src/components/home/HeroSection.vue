@@ -14,13 +14,13 @@
           <div class="image-overlay"></div>
           <div class="floating-elements">
             <div class="element photo-frame">
-              <img src="@/assets/images/frame1.png" alt="Photo Frame" />
+              <div class="placeholder">Photo Frame</div>
             </div>
             <div class="element kiosk">
-              <img src="@/assets/images/kiosk.png" alt="Kiosk" />
+              <div class="placeholder">Kiosk</div>
             </div>
             <div class="element students">
-              <img src="@/assets/images/students.png" alt="Students" />
+              <div class="placeholder">Students</div>
             </div>
           </div>
         </div>
@@ -196,5 +196,16 @@ export default {
   .hero-image {
     display: none;
   }
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 10px;
 }
 </style>
