@@ -52,12 +52,12 @@ export default {
 
     const handleScroll = (event) => {
       const now = Date.now()
-      if (isScrolling || now - lastScrollTime < 10) return
+      if (isScrolling || now - lastScrollTime < 800) return
 
       lastScrollTime = now
       const delta = event.wheelDelta || -event.detail
 
-      if (Math.abs(delta) > 2) {
+      if (Math.abs(delta) > 30) {
         if (delta < 0 && currentSection < sections.length - 1) {
           currentSection++
           smoothScroll(sections[currentSection])
@@ -76,7 +76,7 @@ export default {
       })
       setTimeout(() => {
         isScrolling = false
-      }, 200)
+      }, 800)
     }
 
     const handleTouchStart = (event) => {
@@ -100,6 +100,25 @@ export default {
 
     onMounted(() => {
       sections = Array.from(document.querySelectorAll('.section'))
+      
+      // Intersection Observer 설정
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active')
+          } else {
+            entry.target.classList.remove('active')
+          }
+        })
+      }, {
+        threshold: 0.3
+      })
+
+      // 모든 섹션에 observer 적용
+      sections.forEach(section => {
+        observer.observe(section)
+      })
+
       window.addEventListener('wheel', handleScroll)
       window.addEventListener('touchstart', handleTouchStart)
       window.addEventListener('touchend', handleTouchEnd)

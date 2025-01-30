@@ -1,8 +1,8 @@
 <template>
-  <section id="kiosk" class="kiosk">
+  <section id="kiosk" class="kiosk section">
     <div class="container">
-      <h2>무피 키오스크</h2>
-      <div class="kiosk-content">
+      <h2 class="section-title">무피 키오스크</h2>
+      <div class="kiosk-content section-content">
         <div class="kiosk-info">
           <h3>스마트한 네컷사진관의 시작</h3>
           <ul class="kiosk-features">
