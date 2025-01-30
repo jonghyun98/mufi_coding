@@ -51,43 +51,47 @@ export default {
     let sections = []
     let footerElement = null
     const SCROLL_DELAY = 800
+    let lastScrollTime = Date.now()
 
     const isAtSectionBottom = (section) => {
-      const rect = section.getBoundingClientRect()
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-      const sectionBottom = rect.top + scrollTop + section.offsetHeight
-      const viewportBottom = scrollTop + window.innerHeight
+      if (!section) return false
+      const scrollHeight = section.scrollHeight
+      const scrollTop = section.scrollTop
+      const clientHeight = section.clientHeight
       
-      // 섹션 하단에 도달했는지 확인 (여유값 20px)
-      return Math.abs(sectionBottom - viewportBottom) < 20
+      return Math.abs(scrollHeight - scrollTop - clientHeight) < 20
     }
 
     const isAtSectionTop = (section) => {
-      const rect = section.getBoundingClientRect()
-      return Math.abs(rect.top) < 20
+      if (!section) return false
+      return section.scrollTop <= 0
     }
 
     const handleScroll = (event) => {
-      if (isScrolling) return
-      
+      const now = Date.now()
+      if (isScrolling || now - lastScrollTime < SCROLL_DELAY) return
+      lastScrollTime = now
+
       const currentSectionEl = sections[currentSection]
       const direction = event.deltaY > 0 ? 'down' : 'up'
 
-      // 현재 섹션의 끝에 도달했는지 확인
-      if (direction === 'down' && isAtSectionBottom(currentSectionEl)) {
-        if (currentSection < sections.length - 1) {
-          event.preventDefault()
-          currentSection++
-          smoothScrollToSection(currentSection)
-        }
-      } 
-      // 현재 섹션의 시작점에 도달했는지 확인
-      else if (direction === 'up' && isAtSectionTop(currentSectionEl)) {
-        if (currentSection > 0) {
-          event.preventDefault()
-          currentSection--
-          smoothScrollToSection(currentSection)
-        }
+      // 섹션 내부 스크롤 허용
+      if (!isAtSectionBottom(currentSectionEl) && direction === 'down') {
+        return
+      }
+      if (!isAtSectionTop(currentSectionEl) && direction === 'up') {
+        return
+      }
+
+      // 섹션 전환
+      event.preventDefault()
+      
+      if (direction === 'down' && currentSection < sections.length - 1) {
+        currentSection++
+        smoothScrollToSection(currentSection)
+      } else if (direction === 'up' && currentSection > 0) {
+        currentSection--
+        smoothScrollToSection(currentSection)
       }
     }
 
@@ -169,6 +173,8 @@ export default {
 .home {
   width: 100%;
   background: white;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .sections-container {
@@ -184,9 +190,10 @@ export default {
   flex-direction: column;
   overflow-y: auto;
   scroll-behavior: smooth;
+  padding: 60px 0;
 
-  &:not(:first-of-type) {
-    padding-top: 60px;
+  &:first-of-type {
+    padding-top: 0;
   }
 }
 
