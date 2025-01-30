@@ -57,7 +57,7 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 80px;
   z-index: 1000;
   transition: all 0.3s ease;
   background: transparent;
@@ -101,16 +101,20 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
+    padding: 0 40px;
   }
 
   .logo {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: bold;
   }
 
   .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
+    align-items: center;
+    height: 100%;
     
     a {
       color: vars.$dark-color;
@@ -118,6 +122,7 @@ export default {
       transition: color 0.3s;
       word-break: keep-all;
       word-wrap: break-word;
+      font-size: 1.1rem;
       
       &:hover {
         color: vars.$primary-color;
@@ -126,11 +131,14 @@ export default {
       &.contact-btn {
         background: vars.$primary-color;
         color: white;
-        padding: 0.5rem 1.5rem;
-        border-radius: 25px;
+        padding: 0.8rem 2rem;
+        border-radius: 30px;
+        font-weight: 500;
         
         &:hover {
           background: color.adjust(vars.$primary-color, $lightness: -10%);
+          transform: translateY(-2px);
+          transition: all 0.3s ease;
         }
       }
     }
@@ -141,19 +149,17 @@ export default {
   }
 
   @include mixins.mobile {
+    height: 60px;
+    
+    .container {
+      padding: 0 20px;
+    }
+
     .nav-links {
-      display: none;
-      
       &.active {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: white;
-        padding: 1rem;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        top: 60px;
+        padding: 1.5rem;
+        gap: 1.5rem;
       }
     }
 

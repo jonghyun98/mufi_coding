@@ -39,8 +39,9 @@ h1, h2, h3, h4, h5, h6, p {
   position: relative;
   overflow: visible;
   opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease-out;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
 
   @include mixins.mobile {
     padding: 60px 16px;
