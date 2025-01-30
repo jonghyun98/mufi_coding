@@ -87,9 +87,6 @@ export default {
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 20px;
-    min-height: calc(100vh - 160px);
-    display: flex;
-    flex-direction: column;
   }
 
   h2 {
@@ -100,11 +97,11 @@ export default {
 }
 
 .kiosk-content {
-  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
+  padding: 2rem 0;
 }
 
 .kiosk-info {
@@ -213,10 +210,6 @@ export default {
 @include mixins.mobile {
   .kiosk {
     padding: 60px 20px;
-  }
-
-  .container {
-    min-height: calc(100vh - 120px);
   }
 
   .kiosk-content {
