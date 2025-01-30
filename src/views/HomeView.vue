@@ -47,59 +47,66 @@ export default {
   },
   setup() {
     let currentSection = 0
-    let isScrolling = false
     let sections = []
-    let footerElement = null
+    let isScrolling = false
     const SCROLL_DELAY = 800
-    let lastScrollTime = Date.now()
 
-    const isAtSectionBottom = (section) => {
-      if (!section) return false
-      const scrollHeight = section.scrollHeight
-      const scrollTop = section.scrollTop
-      const clientHeight = section.clientHeight
-      
-      return Math.abs(scrollHeight - scrollTop - clientHeight) < 20
-    }
+    const setupIntersectionObserver = () => {
+      const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.95 // 95% 이상 보일 때 감지
+      }
 
-    const isAtSectionTop = (section) => {
-      if (!section) return false
-      return section.scrollTop <= 0
+      const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const index = sections.findIndex(section => section === entry.target)
+            if (index !== -1) {
+              currentSection = index
+            }
+          }
+        })
+      }, options)
+
+      sections.forEach(section => sectionObserver.observe(section))
+      return sectionObserver
     }
 
     const handleScroll = (event) => {
-      const now = Date.now()
-      if (isScrolling || now - lastScrollTime < SCROLL_DELAY) return
-      lastScrollTime = now
+      if (isScrolling) return
 
       const currentSectionEl = sections[currentSection]
-      const direction = event.deltaY > 0 ? 'down' : 'up'
+      if (!currentSectionEl) return
 
-      // 섹션 내부 스크롤 허용
-      if (!isAtSectionBottom(currentSectionEl) && direction === 'down') {
-        return
-      }
-      if (!isAtSectionTop(currentSectionEl) && direction === 'up') {
-        return
-      }
+      const { scrollTop, scrollHeight, clientHeight } = currentSectionEl
+      const isAtBottom = scrollHeight - scrollTop - clientHeight <= 1
+      const isAtTop = scrollTop <= 0
 
-      // 섹션 전환
-      event.preventDefault()
-      
-      if (direction === 'down' && currentSection < sections.length - 1) {
-        currentSection++
-        smoothScrollToSection(currentSection)
-      } else if (direction === 'up' && currentSection > 0) {
-        currentSection--
-        smoothScrollToSection(currentSection)
+      // 섹션 내부 스크롤이 끝에 도달했을 때만 섹션 전환
+      if (event.deltaY > 0 && isAtBottom) { // 아래로 스크롤
+        if (currentSection < sections.length - 1) {
+          event.preventDefault()
+          moveToSection(currentSection + 1)
+        }
+      } else if (event.deltaY < 0 && isAtTop) { // 위로 스크롤
+        if (currentSection > 0) {
+          event.preventDefault()
+          moveToSection(currentSection - 1)
+        }
       }
     }
 
-    const smoothScrollToSection = (index) => {
-      if (isScrolling) return
-      
+    const moveToSection = (index) => {
+      if (isScrolling || index < 0 || index >= sections.length) return
+
       isScrolling = true
-      sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' })
+      currentSection = index
+
+      sections[index].scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
 
       setTimeout(() => {
         isScrolling = false
@@ -115,29 +122,28 @@ export default {
     }
 
     const handleTouchEnd = (event) => {
+      if (isScrolling) return
+
       const touchEndY = event.changedTouches[0].clientY
       const deltaY = touchStartY - touchEndY
 
       if (Math.abs(deltaY) < TOUCH_THRESHOLD) return
 
       const currentSectionEl = sections[currentSection]
-      
-      if (deltaY > 0 && isAtSectionBottom(currentSectionEl)) {
-        if (currentSection < sections.length - 1) {
-          currentSection++
-          smoothScrollToSection(currentSection)
-        }
-      } else if (deltaY < 0 && isAtSectionTop(currentSectionEl)) {
-        if (currentSection > 0) {
-          currentSection--
-          smoothScrollToSection(currentSection)
-        }
+      const { scrollTop, scrollHeight, clientHeight } = currentSectionEl
+      const isAtBottom = scrollHeight - scrollTop - clientHeight <= 1
+      const isAtTop = scrollTop <= 0
+
+      if (deltaY > 0 && isAtBottom && currentSection < sections.length - 1) {
+        moveToSection(currentSection + 1)
+      } else if (deltaY < 0 && isAtTop && currentSection > 0) {
+        moveToSection(currentSection - 1)
       }
     }
 
     onMounted(() => {
       sections = Array.from(document.querySelectorAll('.section'))
-      footerElement = document.querySelector('footer')
+      const observer = setupIntersectionObserver()
       
       window.addEventListener('wheel', handleScroll, { passive: false })
       window.addEventListener('touchstart', handleTouchStart, { passive: true })
@@ -158,12 +164,14 @@ export default {
       )
 
       sections.forEach(section => navObserver.observe(section))
-    })
 
-    onBeforeUnmount(() => {
-      window.removeEventListener('wheel', handleScroll)
-      window.removeEventListener('touchstart', handleTouchStart)
-      window.removeEventListener('touchend', handleTouchEnd)
+      onBeforeUnmount(() => {
+        observer.disconnect()
+        navObserver.disconnect()
+        window.removeEventListener('wheel', handleScroll)
+        window.removeEventListener('touchstart', handleTouchStart)
+        window.removeEventListener('touchend', handleTouchEnd)
+      })
     })
   }
 }
@@ -177,25 +185,24 @@ export default {
 
 .sections-container {
   width: 100%;
-  position: relative;
   height: 100vh;
   overflow-y: auto;
   scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
 }
 
 .section {
   width: 100%;
   min-height: 100vh;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  padding: 60px 0;
-
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow-y: auto;
+  
   &:first-of-type {
     padding-top: 0;
   }
 
-  // 마지막 섹션에 여백 추가
   &:last-of-type {
     margin-bottom: 60px;
   }

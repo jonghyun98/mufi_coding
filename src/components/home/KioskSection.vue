@@ -74,14 +74,19 @@
   background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
   color: white;
   position: relative;
+  display: flex;
+  flex-direction: column;
   padding: 80px 0;
 
   .container {
-    height: auto;
-    min-height: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 20px;
   }
 
   h2 {
@@ -96,6 +101,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
+  height: 100%;
 }
 
 .kiosk-info {
@@ -202,10 +208,13 @@
 }
 
 @include mixins.mobile {
+  .kiosk {
+    padding: 60px 20px;
+  }
+
   .kiosk-content {
     grid-template-columns: 1fr;
     gap: 2rem;
-    padding: 0 1rem;
   }
 
   .kiosk-specs .specs-grid {
