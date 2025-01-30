@@ -54,6 +54,10 @@ export default {
     let scrollTimeout = null
 
     const handleScroll = (event) => {
+      if (currentSection === sections.length - 1) {
+        return;
+      }
+
       event.preventDefault()
       
       if (isScrolling) return
@@ -89,11 +93,17 @@ export default {
     }
 
     const handleTouchStart = (event) => {
+      if (currentSection === sections.length - 1) {
+        return;
+      }
       if (isScrolling) return
       touchStartY = event.touches[0].clientY
     }
 
     const handleTouchEnd = (event) => {
+      if (currentSection === sections.length - 1) {
+        return;
+      }
       if (isScrolling) return
       
       const touchEndY = event.changedTouches[0].clientY
@@ -170,6 +180,12 @@ export default {
   scroll-snap-stop: always;
   display: flex;
   align-items: center;
+
+  &:last-of-type {
+    min-height: auto;
+    height: auto;
+    margin-bottom: 0;
+  }
 }
 
 @media (max-width: 1920px) {
@@ -177,6 +193,10 @@ export default {
     height: 100vh;
     min-height: auto;
     aspect-ratio: auto;
+
+    &:last-of-type {
+      height: auto;
+    }
   }
 }
 </style>
