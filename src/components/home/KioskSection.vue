@@ -67,6 +67,12 @@
   </section>
 </template>
 
+<script>
+export default {
+  name: 'KioskSection'
+}
+</script>
+
 <style lang="scss" scoped>
 .kiosk {
   width: 100%;
@@ -74,19 +80,16 @@
   background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
   color: white;
   position: relative;
-  display: flex;
-  flex-direction: column;
   padding: 80px 0;
 
   .container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 20px;
+    min-height: calc(100vh - 160px);
+    display: flex;
+    flex-direction: column;
   }
 
   h2 {
@@ -97,11 +100,11 @@
 }
 
 .kiosk-content {
+  flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: center;
-  height: 100%;
 }
 
 .kiosk-info {
@@ -210,6 +213,10 @@
 @include mixins.mobile {
   .kiosk {
     padding: 60px 20px;
+  }
+
+  .container {
+    min-height: calc(100vh - 120px);
   }
 
   .kiosk-content {
