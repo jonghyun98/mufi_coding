@@ -59,6 +59,7 @@ export default {
   display: flex;
   align-items: center;
   overflow: hidden;
+  padding-top: 60px;
 }
 
 .hero-background {
@@ -97,6 +98,7 @@ export default {
   gap: 4rem;
   align-items: center;
   padding: 2rem;
+  margin-top: -60px;
 }
 
 .hero-text {

@@ -175,11 +175,15 @@ export default {
   height: 100vh;
   min-height: 1080px;
   position: relative;
-  padding-top: 60px;
+  padding-top: 0;
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
   align-items: center;
+
+  &:not(:first-of-type) {
+    padding-top: 60px;
+  }
 
   &:last-of-type {
     min-height: auto;
