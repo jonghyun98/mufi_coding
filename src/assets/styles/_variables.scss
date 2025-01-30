@@ -1,0 +1,31 @@
+@forward "sass:color";
+
+// Colors
+$primary-color: #FF6B6B !default;
+$secondary-color: #4ECDC4 !default;
+$dark-color: #2C3E50 !default;
+$light-color: #F7F9FC !default;
+
+// Breakpoints
+$mobile: 768px !default;
+$tablet: 1024px !default;
+$desktop: 1200px !default;
+
+// Typography
+$font-family: 'Noto Sans KR', sans-serif !default;
+$font-sizes: (
+  h1: 3.5rem,
+  h2: 2.5rem,
+  h3: 2rem,
+  body: 1rem,
+  small: 0.875rem
+);
+
+// Spacing
+$spacing: (
+  xs: 0.5rem,
+  sm: 1rem,
+  md: 2rem,
+  lg: 4rem,
+  xl: 8rem
+);
