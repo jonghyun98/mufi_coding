@@ -35,13 +35,6 @@ h2 {
   text-align: center;
 }
 
-// 스크롤 동작 최적화
-html {
-  scroll-behavior: smooth;
-  height: 100%;
-  overflow: hidden;
-}
-
 // 텍스트 애니메이션 클래스 추가
 .fade-in-up {
   opacity: 0;
@@ -100,4 +93,11 @@ html {
       transform: translateY(0);
     }
   }
+}
+
+// 기존 스크롤 관련 스타일 제거
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
