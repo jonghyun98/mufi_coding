@@ -6,7 +6,7 @@
       <div class="cases-grid">
         <div class="case-item">
           <div class="case-image">
-            <img src="@/assets/images/chungbuk.jpg" alt="충북대학교" />
+            <img :src="chungbukImage" alt="충북대학교" />
           </div>
           <h3>충북대학교</h3>
           <p>2023 대동제 축제 기간 동안 3일간 1,500명 이상 이용</p>
@@ -28,7 +28,7 @@
 
         <div class="case-item">
           <div class="case-image">
-            <img src="@/assets/images/hufs.jpg" alt="한국외국어대학교" />
+            <img :src="hufsImage" alt="한국외국어대학교" />
           </div>
           <h3>한국외국어대학교</h3>
           <p>2023 축제 현장에서 2,000명 이상의 학생들과 함께</p>
@@ -50,7 +50,7 @@
 
         <div class="case-item">
           <div class="case-image">
-            <img src="@/assets/images/seoultech.jpg" alt="서울과학기술대학교" />
+            <img :src="seoulTechImage" alt="서울과학기술대학교" />
           </div>
           <h3>서울과학기술대학교</h3>
           <p>2023 대동제에서 총장님과 함께한 특별한 순간</p>
@@ -89,6 +89,23 @@
   </section>
 </template>
 
+<script>
+import chungbukImage from '../assets/images/chungbuk.jpg'
+import hufsImage from '../assets/images/hufs.jpg'
+import seoulTechImage from '../assets/images/seoultech.jpg'
+
+export default {
+  name: 'CasesSection',
+  data() {
+    return {
+      chungbukImage,
+      hufsImage,
+      seoulTechImage
+    }
+  }
+}
+</script>
+
 <style lang="scss" scoped>
 .cases {
   width: 100%;
@@ -120,16 +137,21 @@
   .case-image {
     width: 100%;
     height: 250px;
-    background: vars.$primary-color;
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
     border-radius: 15px;
     margin-bottom: 1.5rem;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 
-    img {
+    .placeholder {
       width: 100%;
       height: 100%;
-      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 500;
       transition: transform 0.5s ease;
 
       &:hover {
