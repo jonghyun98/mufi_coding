@@ -48,136 +48,146 @@ export default {
   setup() {
     let currentSection = 0
     let isScrolling = false
-    let lastScrollTime = 0
+    let lastScrollTime = Date.now()
     let sections = []
-    let touchStartY = 0
-    let scrollTimeout = null
+    let footerElement = null
     let isLastSection = false
+    const SCROLL_DELAY = 800 // 스크롤 딜레이 시간
+
+    const checkScrollDirection = (event) => {
+      return event.wheelDelta > 0 ? 'up' : 'down'
+    }
+
+    const isFooterVisible = () => {
+      if (!footerElement) return false
+      const rect = footerElement.getBoundingClientRect()
+      return rect.top <= window.innerHeight
+    }
 
     const handleScroll = (event) => {
+      event.preventDefault()
+      
       const now = Date.now()
-      if (isScrolling || now - lastScrollTime < 1000) return
-      lastScrollTime = now
+      if (isScrolling || now - lastScrollTime < SCROLL_DELAY) return
+      
+      const direction = checkScrollDirection(event)
+      const isAtFooter = isFooterVisible()
 
-      // 마지막 섹션에서 위로 스크롤할 때는 이벤트 처리
-      if (isLastSection && event.wheelDelta > 0) {
-        event.preventDefault()
-        currentSection--
+      // 푸터에서의 스크롤 처리
+      if (isAtFooter && direction === 'up') {
+        currentSection = sections.length - 1
         smoothScroll(sections[currentSection])
-        isLastSection = false
+        isLastSection = true
         return
       }
 
-      // 마지막 섹션이 아닐 때는 모든 스크롤 이벤트 처리
-      if (!isLastSection) {
-        event.preventDefault()
-        const delta = event.wheelDelta || -event.detail
-
-        if (delta < 0 && currentSection < sections.length - 1) {
-          currentSection++
-          if (currentSection === sections.length - 1) {
-            isLastSection = true
-          }
-          smoothScroll(sections[currentSection])
-        } else if (delta > 0 && currentSection > 0) {
+      // 마지막 섹션에서의 스크롤 처리
+      if (isLastSection) {
+        if (direction === 'up') {
           currentSection--
           smoothScroll(sections[currentSection])
+          isLastSection = false
+        } else if (!isAtFooter) {
+          footerElement?.scrollIntoView({ behavior: 'smooth' })
         }
+        return
       }
+
+      // 일반 섹션 스크롤 처리
+      if (direction === 'down' && currentSection < sections.length - 1) {
+        currentSection++
+        if (currentSection === sections.length - 1) {
+          isLastSection = true
+        }
+        smoothScroll(sections[currentSection])
+      } else if (direction === 'up' && currentSection > 0) {
+        currentSection--
+        smoothScroll(sections[currentSection])
+      }
+
+      lastScrollTime = now
     }
 
     const smoothScroll = (target) => {
-      if (isScrolling) return
+      if (!target || isScrolling) return
       
       isScrolling = true
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      })
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-      clearTimeout(scrollTimeout)
-      scrollTimeout = setTimeout(() => {
+      setTimeout(() => {
         isScrolling = false
-      }, 1000)
+      }, SCROLL_DELAY)
     }
 
+    // 터치 이벤트 처리 개선
+    let touchStartY = 0
+    const TOUCH_THRESHOLD = 50
+
     const handleTouchStart = (event) => {
-      if (currentSection === sections.length - 1) {
-        return;
-      }
       if (isScrolling) return
       touchStartY = event.touches[0].clientY
     }
 
     const handleTouchEnd = (event) => {
-      if (currentSection === sections.length - 1) {
-        return;
-      }
       if (isScrolling) return
       
       const touchEndY = event.changedTouches[0].clientY
       const deltaY = touchEndY - touchStartY
 
-      if (Math.abs(deltaY) > 50) {
-        if (deltaY < 0 && currentSection < sections.length - 1) {
-          currentSection++
-          smoothScroll(sections[currentSection])
-        } else if (deltaY > 0 && currentSection > 0) {
-          currentSection--
-          smoothScroll(sections[currentSection])
-        }
+      if (Math.abs(deltaY) < TOUCH_THRESHOLD) return
+
+      const direction = deltaY > 0 ? 'up' : 'down'
+      handleScrollDirection(direction)
+    }
+
+    const handleScrollDirection = (direction) => {
+      if (isFooterVisible() && direction === 'up') {
+        currentSection = sections.length - 1
+        smoothScroll(sections[currentSection])
+        isLastSection = true
+        return
+      }
+
+      if (direction === 'down' && currentSection < sections.length - 1) {
+        currentSection++
+        smoothScroll(sections[currentSection])
+      } else if (direction === 'up' && currentSection > 0) {
+        currentSection--
+        smoothScroll(sections[currentSection])
       }
     }
 
     onMounted(() => {
       sections = Array.from(document.querySelectorAll('.section'))
+      footerElement = document.querySelector('footer')
       
       window.addEventListener('wheel', handleScroll, { passive: false })
       window.addEventListener('touchstart', handleTouchStart, { passive: true })
       window.addEventListener('touchend', handleTouchEnd, { passive: true })
 
-      // Intersection Observer 설정 - 네비게이션 바 색상 변경용
+      // Intersection Observer 설정
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '-10% 0px'
+      }
+
       const navObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const sectionId = entry.target.id
-            // TheNavbar 컴포넌트에 이벤트 발송
             window.dispatchEvent(new CustomEvent('section-change', {
-              detail: { sectionId }
+              detail: { sectionId: entry.target.id }
             }))
           }
         })
-      }, {
-        threshold: 0.6
-      })
+      }, observerOptions)
 
-      sections.forEach(section => {
-        navObserver.observe(section)
-      })
-
-      // 섹션 활성화 감지용 Observer
-      const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active')
-          } else {
-            entry.target.classList.remove('active')
-          }
-        })
-      }, {
-        threshold: 0.3
-      })
-
-      sections.forEach(section => {
-        sectionObserver.observe(section)
-      })
+      sections.forEach(section => navObserver.observe(section))
     })
 
     onBeforeUnmount(() => {
       window.removeEventListener('wheel', handleScroll)
       window.removeEventListener('touchstart', handleTouchStart)
       window.removeEventListener('touchend', handleTouchEnd)
-      if (scrollTimeout) clearTimeout(scrollTimeout)
     })
   }
 }
@@ -191,7 +201,7 @@ export default {
 
 .sections-container {
   width: 100%;
-  min-height: 100vh;
+  position: relative;
 }
 
 .section {
@@ -201,13 +211,10 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 
   &:not(:first-of-type) {
     padding-top: 60px;
-  }
-
-  &:last-of-type {
-    margin-bottom: 0;
   }
 }
 
