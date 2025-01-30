@@ -38,9 +38,17 @@ h1, h2, h3, h4, h5, h6, p {
   padding: 80px 20px;
   position: relative;
   overflow: visible;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease-out;
 
   @include mixins.mobile {
     padding: 60px 16px;
+  }
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 

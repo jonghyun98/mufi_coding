@@ -49,21 +49,27 @@ export default {
     onMounted(() => {
       const sections = document.querySelectorAll('.section')
       
-      // 네비게이션 바 색상 변경 Observer만 유지
-      const navObserver = new IntersectionObserver(
+      // Intersection Observer 설정
+      const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
+              // 섹션 페이드인 애니메이션
+              entry.target.classList.add('visible')
+              // 네비게이션 바 색상 변경
               window.dispatchEvent(new CustomEvent('section-change', {
                 detail: { sectionId: entry.target.id }
               }))
             }
           })
         },
-        { threshold: 0.5 }
+        {
+          threshold: 0.2,
+          rootMargin: '-50px'
+        }
       )
 
-      sections.forEach(section => navObserver.observe(section))
+      sections.forEach(section => observer.observe(section))
     })
   }
 }

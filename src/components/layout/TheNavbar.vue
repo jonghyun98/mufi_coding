@@ -3,9 +3,9 @@
     <div class="container">
       <div class="logo">MUFI</div>
       <div class="nav-links" :class="{ 'active': isMenuOpen }">
-        <a href="#features">특징</a>
-        <a href="#service">서비스</a>
-        <a href="#contact" class="contact-btn">문의하기</a>
+        <a href="#features" @click.prevent="scrollToSection('features')">특징</a>
+        <a href="#service" @click.prevent="scrollToSection('service')">서비스</a>
+        <a href="#contact" @click.prevent="scrollToSection('contact')" class="contact-btn">문의하기</a>
       </div>
       <button class="mobile-menu-btn" @click="toggleMenu">
         <span></span>
@@ -23,6 +23,21 @@ export default {
       isDarkSection: true
     }
   },
+  methods: {
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen
+    },
+    scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId)
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' })
+        this.isMenuOpen = false
+      }
+    },
+    getDarkSections() {
+      return ['hero', 'kiosk', 'reviews']
+    }
+  },
   mounted() {
     // 섹션 변경 이벤트 리스너
     window.addEventListener('section-change', (event) => {
@@ -32,14 +47,6 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener('section-change', this.handleSectionChange)
-  },
-  methods: {
-    toggleMenu() {
-      this.isMenuOpen = !this.isMenuOpen
-    },
-    getDarkSections() {
-      return ['hero', 'kiosk', 'reviews']
-    }
   }
 }
 </script>
