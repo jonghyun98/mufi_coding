@@ -90,9 +90,9 @@
 </template>
 
 <script>
-import chungbukImage from '../assets/images/chungbuk.png'
-import hufsImage from '../assets/images/hufs.png'
-import seoulTechImage from '../assets/images/seoultech.png'
+import chungbukImage from '@/assets/images/chungbuk.png'
+import hufsImage from '@/assets/images/hufs.png'
+import seoulTechImage from '@/assets/images/seoultech.png'
 
 export default {
   name: 'CasesSection',
