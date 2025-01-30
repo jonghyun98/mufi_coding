@@ -46,132 +46,28 @@ export default {
     TheFooter
   },
   setup() {
-    let currentSection = 0
-    let sections = []
-    let isScrolling = false
-    const SCROLL_DELAY = 800
-
-    const setupIntersectionObserver = () => {
-      const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.95 // 95% 이상 보일 때 감지
-      }
-
-      const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const index = sections.findIndex(section => section === entry.target)
-            if (index !== -1) {
-              currentSection = index
-            }
-          }
-        })
-      }, options)
-
-      sections.forEach(section => sectionObserver.observe(section))
-      return sectionObserver
-    }
-
-    const handleScroll = (event) => {
-      if (isScrolling) return
-
-      const currentSectionEl = sections[currentSection]
-      if (!currentSectionEl) return
-
-      const { scrollTop, scrollHeight, clientHeight } = currentSectionEl
-      const isAtBottom = scrollHeight - scrollTop - clientHeight <= 1
-      const isAtTop = scrollTop <= 0
-
-      // 섹션 내부 스크롤이 끝에 도달했을 때만 섹션 전환
-      if (event.deltaY > 0 && isAtBottom) { // 아래로 스크롤
-        if (currentSection < sections.length - 1) {
-          event.preventDefault()
-          moveToSection(currentSection + 1)
-        }
-      } else if (event.deltaY < 0 && isAtTop) { // 위로 스크롤
-        if (currentSection > 0) {
-          event.preventDefault()
-          moveToSection(currentSection - 1)
-        }
-      }
-    }
-
-    const moveToSection = (index) => {
-      if (isScrolling || index < 0 || index >= sections.length) return
-
-      isScrolling = true
-      currentSection = index
-
-      sections[index].scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      })
-
-      setTimeout(() => {
-        isScrolling = false
-      }, SCROLL_DELAY)
-    }
-
-    // 터치 이벤트 처리
-    let touchStartY = 0
-    const TOUCH_THRESHOLD = 50
-
-    const handleTouchStart = (event) => {
-      touchStartY = event.touches[0].clientY
-    }
-
-    const handleTouchEnd = (event) => {
-      if (isScrolling) return
-
-      const touchEndY = event.changedTouches[0].clientY
-      const deltaY = touchStartY - touchEndY
-
-      if (Math.abs(deltaY) < TOUCH_THRESHOLD) return
-
-      const currentSectionEl = sections[currentSection]
-      const { scrollTop, scrollHeight, clientHeight } = currentSectionEl
-      const isAtBottom = scrollHeight - scrollTop - clientHeight <= 1
-      const isAtTop = scrollTop <= 0
-
-      if (deltaY > 0 && isAtBottom && currentSection < sections.length - 1) {
-        moveToSection(currentSection + 1)
-      } else if (deltaY < 0 && isAtTop && currentSection > 0) {
-        moveToSection(currentSection - 1)
-      }
-    }
-
     onMounted(() => {
-      sections = Array.from(document.querySelectorAll('.section'))
-      const observer = setupIntersectionObserver()
+      const sections = document.querySelectorAll('.section')
       
-      window.addEventListener('wheel', handleScroll, { passive: false })
-      window.addEventListener('touchstart', handleTouchStart, { passive: true })
-      window.addEventListener('touchend', handleTouchEnd, { passive: true })
-
-      // 네비게이션 바 색상 변경 Observer
-      const navObserver = new IntersectionObserver(
+      // Intersection Observer로 섹션 진입 감지
+      const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
+              entry.target.classList.add('visible')
+              // 네비게이션 바 색상 변경 이벤트
               window.dispatchEvent(new CustomEvent('section-change', {
                 detail: { sectionId: entry.target.id }
               }))
             }
           })
         },
-        { threshold: 0.5 }
+        {
+          threshold: 0.2
+        }
       )
 
-      sections.forEach(section => navObserver.observe(section))
-
-      onBeforeUnmount(() => {
-        observer.disconnect()
-        navObserver.disconnect()
-        window.removeEventListener('wheel', handleScroll)
-        window.removeEventListener('touchstart', handleTouchStart)
-        window.removeEventListener('touchend', handleTouchEnd)
-      })
+      sections.forEach(section => observer.observe(section))
     })
   }
 }
@@ -185,26 +81,23 @@ export default {
 
 .sections-container {
   width: 100%;
-  height: 100vh;
-  overflow-y: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: y mandatory;
 }
 
 .section {
   width: 100%;
   min-height: 100vh;
   position: relative;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  overflow-y: auto;
-  
-  &:first-of-type {
-    padding-top: 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  &:last-of-type {
-    margin-bottom: 60px;
+  &:first-of-type {
+    padding-top: 0;
   }
 }
 
