@@ -13,12 +13,7 @@
 
 <script>
 export default {
-  name: 'HeroSection',
-  computed: {
-    heroBackgroundImage() {
-      return '/mufi_coding/images/hero-bg.jpg' // public 폴더 기준 경로
-    }
-  }
+  name: 'HeroSection'
 }
 </script>
 
@@ -38,11 +33,8 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: v-bind('url(heroBackgroundImage)');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    filter: brightness(0.4);
+    background: linear-gradient(45deg, vars.$primary-color, color.adjust(vars.$primary-color, $lightness: 20%));
+    opacity: 0.9;
     z-index: -1;
   }
 }

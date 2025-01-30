@@ -6,8 +6,8 @@
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 24 24" class="icon">
-              <path d="M12,0A12,12,0,1,0,24,12,12,12,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10,10,0,0,1,12,22Z"/>
-              <path d="M12,6a1,1,0,0,0-1,1v5H7a1,1,0,0,0,0,2h5a1,1,0,0,0,1-1V7A1,1,0,0,0,12,6Z"/>
+              <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+              <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z"/>
             </svg>
           </div>
           <h3>24시간 운영</h3>
@@ -16,13 +16,8 @@
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 24 24" class="icon">
-              <path d="M23,22H3a1,1,0,0,1-1-1V1A1,1,0,0,1,3,0H23a1,1,0,0,1,1,1V21A1,1,0,0,1,23,22ZM4,20H22V2H4Z"/>
-              <path d="M19.5,9h-7a1,1,0,0,1,0-2h7a1,1,0,0,1,0,2Z"/>
-              <path d="M19.5,13h-7a1,1,0,0,1,0-2h7a1,1,0,0,1,0,2Z"/>
-              <path d="M19.5,17h-7a1,1,0,0,1,0-2h7a1,1,0,0,1,0,2Z"/>
-              <circle cx="8.5" cy="8" r="1.5"/>
-              <circle cx="8.5" cy="12" r="1.5"/>
-              <circle cx="8.5" cy="16" r="1.5"/>
+              <path d="M20 2H4c-1.103 0-2 .897-2 2v12c0 1.103.897 2 2 2h3v3.767L13.277 18H20c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2zm0 14h-7.277L9 18.233V16H4V4h16v12z"/>
+              <path d="M7 7h10v2H7zm0 4h7v2H7z"/>
             </svg>
           </div>
           <h3>데이터 기반 운영</h3>
@@ -31,9 +26,8 @@
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 24 24" class="icon">
-              <path d="M21,2H3A1,1,0,0,0,2,3V21a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V3A1,1,0,0,0,21,2ZM20,20H4V4H20Z"/>
-              <path d="M9.5,11A1.5,1.5,0,1,0,8,9.5,1.5,1.5,0,0,0,9.5,11Z"/>
-              <path d="M16,17H8a1,1,0,0,1-.89-1.45l2-4a1,1,0,0,1,1.78,0l1.11,2.22,3-6a1,1,0,0,1,1.78,0l3,6A1,1,0,0,1,19,15H16Z"/>
+              <path d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V5h16l.002 14H4z"/>
+              <path d="M9.293 6.293L5.586 10l3.707 3.707 1.414-1.414L8.414 10l2.293-2.293zm5.414 0l-1.414 1.414L15.586 10l-2.293 2.293 1.414 1.414L18.414 10z"/>
             </svg>
           </div>
           <h3>트렌디한 디자인</h3>
@@ -87,10 +81,13 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: rgba(vars.$primary-color, 0.1);
+    border-radius: 50%;
+    padding: 1rem;
 
     .icon {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       fill: vars.$primary-color;
     }
   }

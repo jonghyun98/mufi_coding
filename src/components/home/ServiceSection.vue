@@ -4,7 +4,11 @@
       <h2>무피만의 특별한 서비스</h2>
       <div class="service-grid">
         <div class="service-card">
-          <img :src="kioskImage" alt="무인 키오스크">
+          <div class="service-image">
+            <div class="placeholder-image">
+              <span>MUFI Kiosk</span>
+            </div>
+          </div>
           <div class="service-content">
             <h3>스마트 키오스크</h3>
             <ul>
@@ -22,12 +26,7 @@
 
 <script>
 export default {
-  name: 'ServiceSection',
-  data() {
-    return {
-      kioskImage: 'https://images.unsplash.com/photo-1612538498456-e861df91d4d0?auto=format&fit=crop&w=800&q=80'
-    }
-  }
+  name: 'ServiceSection'
 }
 </script>
 
@@ -60,10 +59,20 @@ export default {
     transform: translateY(-5px);
   }
 
-  img {
+  .service-image {
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    
+    .placeholder-image {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, vars.$primary-color, color.adjust(vars.$primary-color, $lightness: 20%));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
   }
 
   .service-content {
