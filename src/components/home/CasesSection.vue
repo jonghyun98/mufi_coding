@@ -138,10 +138,8 @@ export default {
     width: 100%;
     height: 250px;
     background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
-    border-radius: 15px;
     margin-bottom: 1.5rem;
     overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 
     img {
       width: 100%;
@@ -175,29 +173,33 @@ export default {
 
 .case-item {
   background: white;
-  border-radius: 10px;
+  border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.3s;
-  padding: 1.5rem;
+  padding: 0;
 
   &:hover {
     transform: translateY(-5px);
   }
 
-  .case-content {
-    h3 {
-      font-size: 1.5rem;
-      margin: 1rem 0;
-      color: vars.$dark-color;
-    }
+  h3 {
+    font-size: 1.5rem;
+    margin: 0 0 0.5rem 0;
+    color: vars.$dark-color;
+    padding: 0 1.5rem;
+  }
 
-    p {
-      color: vars.$dark-color;
-      opacity: 0.8;
-      margin-bottom: 1.5rem;
-      line-height: 1.6;
-    }
+  p {
+    color: vars.$dark-color;
+    opacity: 0.8;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    padding: 0 1.5rem;
+  }
+
+  .case-stats {
+    padding: 0 1.5rem 1.5rem;
   }
 }
 
@@ -259,6 +261,20 @@ export default {
 
     .case-image {
       height: 200px;
+    }
+  }
+
+  .case-item {
+    h3 {
+      padding: 0 1rem;
+    }
+
+    p {
+      padding: 0 1rem;
+    }
+
+    .case-stats {
+      padding: 0 1rem 1rem;
     }
   }
 
