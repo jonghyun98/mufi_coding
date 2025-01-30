@@ -42,18 +42,17 @@ export default {
         })
         setTimeout(() => {
           isScrolling = false
-        }, 500) // 애니메이션 시간 더 단축
+        }, 300) // 애니메이션 시간 더욱 단축
       }
 
-      // 스크롤 이벤트 핸들러 - 디바운스 제거하고 쓰로틀링으로 변경
       handleScroll = (event) => {
         const now = Date.now()
-        if (isScrolling || now - lastScrollTime < 50) return // 쓰로틀링 간격 50ms
-        
+        if (isScrolling || now - lastScrollTime < 20) return // 쓰로틀링 간격 대폭 감소
+
         lastScrollTime = now
         const delta = event.wheelDelta || -event.detail
 
-        if (Math.abs(delta) > 10) { // 감도 더 증가
+        if (Math.abs(delta) > 5) { // 감도 매우 증가
           if (delta < 0 && currentSection < sections.length - 1) {
             currentSection++
             smoothScroll(sections[currentSection])
@@ -64,7 +63,7 @@ export default {
         }
       }
 
-      // 터치 이벤트도 더 민감하게 조정
+      // 터치 이벤트 감도도 증가
       let touchStartY = 0
 
       handleTouchStart = (event) => {
@@ -75,7 +74,7 @@ export default {
         const touchEndY = event.changedTouches[0].clientY
         const delta = touchEndY - touchStartY
 
-        if (Math.abs(delta) > 20) { // 터치 감도 더 증가
+        if (Math.abs(delta) > 10) { // 터치 감도 대폭 증가
           if (delta < 0 && currentSection < sections.length - 1) {
             currentSection++
             smoothScroll(sections[currentSection])
@@ -112,6 +111,7 @@ export default {
   position: relative;
   overflow: hidden;
   padding-top: 60px;
-  scroll-snap-align: start; // 스크롤 스냅 추가
+  scroll-snap-align: start;
+  scroll-snap-stop: always; // 스크롤 스냅 강화
 }
 </style>
