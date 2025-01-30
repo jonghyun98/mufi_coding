@@ -69,11 +69,9 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  overflow-x: hidden;
-  overflow-y: auto; // 세로 스크롤 허용
-  background: white;
-  min-height: 100vh;
   width: 100%;
+  min-height: 100%;
+  background: white;
 }
 
 section {
