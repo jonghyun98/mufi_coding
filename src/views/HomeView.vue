@@ -173,13 +173,14 @@ export default {
 .home {
   width: 100%;
   background: white;
-  height: 100vh;
-  overflow-y: auto;
 }
 
 .sections-container {
   width: 100%;
   position: relative;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .section {
@@ -188,12 +189,15 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  scroll-behavior: smooth;
   padding: 60px 0;
 
   &:first-of-type {
     padding-top: 0;
+  }
+
+  // 마지막 섹션에 여백 추가
+  &:last-of-type {
+    margin-bottom: 60px;
   }
 }
 

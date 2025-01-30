@@ -69,9 +69,20 @@
 
 <style lang="scss" scoped>
 .kiosk {
+  width: 100%;
+  min-height: 100vh;
   background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
   color: white;
-  padding: 5rem 0;
+  position: relative;
+  padding: 80px 0;
+
+  .container {
+    height: auto;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 
   h2 {
     text-align: center;
