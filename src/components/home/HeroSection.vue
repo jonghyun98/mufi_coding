@@ -15,13 +15,28 @@
           <div class="image-overlay"></div>
           <div class="floating-elements">
             <div class="element photo-frame">
-              <div class="placeholder">Photo Frame</div>
+              <div class="placeholder">
+                <svg viewBox="0 0 24 24" class="icon">
+                  <path d="M21 3H3C2 3 1 4 1 5v14c0 1.1.9 2 2 2h18c1 0 2-1 2-2V5c0-1-1-2-2-2zm0 15.92c-.02.03-.06.06-.08.08H3V5.08L3.08 5h17.83c.03.02.06.06.08.08v13.84zm-10-3.41L8.5 12.5 5 17h14l-4.5-6-3.5 4.51z"/>
+                  <path d="M8.5 11a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
+                </svg>
+              </div>
             </div>
             <div class="element kiosk">
-              <div class="placeholder">Kiosk</div>
+              <div class="placeholder">
+                <svg viewBox="0 0 24 24" class="icon">
+                  <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V6h16v12z"/>
+                  <path d="M6 8h12v2H6zm0 4h12v2H6zm0 4h8v2H6z"/>
+                  <path d="M18 16h2v2h-2z"/>
+                </svg>
+              </div>
             </div>
             <div class="element students">
-              <div class="placeholder">Students</div>
+              <div class="placeholder">
+                <svg viewBox="0 0 24 24" class="icon">
+                  <path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -232,5 +247,28 @@ export default {
   justify-content: center;
   color: white;
   border-radius: 10px;
+  backdrop-filter: blur(5px);
+
+  .icon {
+    width: 60%;
+    height: 60%;
+    fill: white;
+    opacity: 0.9;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  }
+}
+
+.element {
+  &.photo-frame .icon {
+    transform: rotate(-10deg);
+  }
+  
+  &.kiosk .icon {
+    transform: rotate(5deg);
+  }
+  
+  &.students .icon {
+    transform: rotate(-5deg);
+  }
 }
 </style>
