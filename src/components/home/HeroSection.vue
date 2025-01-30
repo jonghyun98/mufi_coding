@@ -52,12 +52,16 @@ export default {
   h1 {
     font-size: 3.5rem;
     margin-bottom: 1rem;
+    word-break: keep-all;
+    word-wrap: break-word;
   }
 
   p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     max-width: 600px;
+    word-break: keep-all;
+    word-wrap: break-word;
   }
 }
 

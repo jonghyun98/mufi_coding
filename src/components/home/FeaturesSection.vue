@@ -53,6 +53,8 @@ export default {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 3rem;
+    word-break: keep-all;
+    word-wrap: break-word;
   }
 }
 
@@ -94,6 +96,13 @@ export default {
 
   h3 {
     margin-bottom: 1rem;
+    word-break: keep-all;
+    word-wrap: break-word;
+  }
+
+  p {
+    word-break: keep-all;
+    word-wrap: break-word;
   }
 }
 

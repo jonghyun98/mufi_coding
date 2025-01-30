@@ -39,6 +39,8 @@ export default {
     text-align: center;
     color: vars.$dark-color;
     margin-bottom: 3rem;
+    word-break: keep-all;
+    word-wrap: break-word;
   }
 }
 
@@ -81,6 +83,8 @@ export default {
     h3 {
       color: vars.$dark-color;
       margin-bottom: 1rem;
+      word-break: keep-all;
+      word-wrap: break-word;
     }
 
     ul {
@@ -96,6 +100,8 @@ export default {
           color: vars.$primary-color;
           margin-right: 0.5rem;
         }
+        word-break: keep-all;
+        word-wrap: break-word;
       }
     }
 

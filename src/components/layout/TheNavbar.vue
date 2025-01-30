@@ -60,6 +60,8 @@ export default {
       color: vars.$dark-color;
       text-decoration: none;
       transition: color 0.3s;
+      word-break: keep-all;
+      word-wrap: break-word;
       
       &:hover {
         color: vars.$primary-color;
