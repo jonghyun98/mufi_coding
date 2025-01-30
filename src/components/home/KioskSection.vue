@@ -8,25 +8,25 @@
           <ul class="kiosk-features">
             <li>
               <svg viewBox="0 0 24 24" class="icon">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
               </svg>
               직관적인 UI/UX로 누구나 쉽게 사용
             </li>
             <li>
               <svg viewBox="0 0 24 24" class="icon">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
               </svg>
               빠른 결제 시스템 탑재
             </li>
             <li>
               <svg viewBox="0 0 24 24" class="icon">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
               </svg>
               실시간 데이터 분석 및 관리
             </li>
             <li>
               <svg viewBox="0 0 24 24" class="icon">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
               </svg>
               다양한 프레임과 필터 옵션
             </li>
@@ -77,7 +77,6 @@
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 3rem;
-    color: white;
   }
 }
 
@@ -109,7 +108,7 @@
         width: 24px;
         height: 24px;
         margin-right: 1rem;
-        fill: vars.$primary-color;
+        fill: white;
       }
     }
   }
@@ -165,8 +164,8 @@
     }
 
     &.primary {
-      background: vars.$primary-color;
-      color: white;
+      background: white;
+      color: vars.$primary-color;
     }
 
     &.secondary {
@@ -195,6 +194,7 @@
   .kiosk-content {
     grid-template-columns: 1fr;
     gap: 2rem;
+    padding: 0 1rem;
   }
 
   .kiosk-specs .specs-grid {

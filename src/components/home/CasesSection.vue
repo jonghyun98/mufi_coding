@@ -109,8 +109,16 @@
   h2 {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     color: vars.$dark-color;
+  }
+
+  .section-desc {
+    text-align: center;
+    color: vars.$dark-color;
+    opacity: 0.8;
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -185,14 +193,6 @@
       opacity: 0.8;
     }
   }
-}
-
-.section-desc {
-  text-align: center;
-  color: vars.$dark-color;
-  opacity: 0.8;
-  margin-bottom: 3rem;
-  font-size: 1.2rem;
 }
 
 .cases-summary {

@@ -44,68 +44,65 @@ export default {
     TheFooter
   },
   setup() {
-    let handleScroll, handleTouchStart, handleTouchEnd
+    let currentSection = 0
+    let isScrolling = false
+    let lastScrollTime = 0
+    let sections = []
+    let touchStartY = 0
+
+    const handleScroll = (event) => {
+      const now = Date.now()
+      if (isScrolling || now - lastScrollTime < 10) return
+
+      lastScrollTime = now
+      const delta = event.wheelDelta || -event.detail
+
+      if (Math.abs(delta) > 2) {
+        if (delta < 0 && currentSection < sections.length - 1) {
+          currentSection++
+          smoothScroll(sections[currentSection])
+        } else if (delta > 0 && currentSection > 0) {
+          currentSection--
+          smoothScroll(sections[currentSection])
+        }
+      }
+    }
+
+    const smoothScroll = (target) => {
+      isScrolling = true
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+      setTimeout(() => {
+        isScrolling = false
+      }, 200)
+    }
+
+    const handleTouchStart = (event) => {
+      touchStartY = event.touches[0].clientY
+    }
+
+    const handleTouchEnd = (event) => {
+      const touchEndY = event.changedTouches[0].clientY
+      const deltaY = touchEndY - touchStartY
+
+      if (Math.abs(deltaY) > 50) {
+        if (deltaY < 0 && currentSection < sections.length - 1) {
+          currentSection++
+          smoothScroll(sections[currentSection])
+        } else if (deltaY > 0 && currentSection > 0) {
+          currentSection--
+          smoothScroll(sections[currentSection])
+        }
+      }
+    }
 
     onMounted(() => {
-      const sections = document.querySelectorAll('.section')
-      let isScrolling = false
-      let currentSection = 0
-      let lastScrollTime = Date.now()
-      
-      const smoothScroll = (target) => {
-        isScrolling = true
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        })
-        setTimeout(() => {
-          isScrolling = false
-        }, 200) // 애니메이션 시간 더욱 단축
-      }
-
-      handleScroll = (event) => {
-        const now = Date.now()
-        if (isScrolling || now - lastScrollTime < 10) return // 쓰로틀링 간격 더욱 감소
-
-        lastScrollTime = now
-        const delta = event.wheelDelta || -event.detail
-
-        if (Math.abs(delta) > 2) { // 감도 극대화
-          if (delta < 0 && currentSection < sections.length - 1) {
-            currentSection++
-            smoothScroll(sections[currentSection])
-          } else if (delta > 0 && currentSection > 0) {
-            currentSection--
-            smoothScroll(sections[currentSection])
-          }
-        }
-      }
-
-      // 터치 이벤트 감도도 증가
-      let touchStartY = 0
-
-      handleTouchStart = (event) => {
-        touchStartY = event.touches[0].clientY
-      }
-
-      handleTouchEnd = (event) => {
-        const touchEndY = event.changedTouches[0].clientY
-        const delta = touchEndY - touchStartY
-
-        if (Math.abs(delta) > 10) { // 터치 감도 대폭 증가
-          if (delta < 0 && currentSection < sections.length - 1) {
-            currentSection++
-            smoothScroll(sections[currentSection])
-          } else if (delta > 0 && currentSection > 0) {
-            currentSection--
-            smoothScroll(sections[currentSection])
-          }
-        }
-      }
-
-      window.addEventListener('wheel', handleScroll, { passive: false })
-      window.addEventListener('touchstart', handleTouchStart, { passive: true })
-      window.addEventListener('touchend', handleTouchEnd, { passive: true })
+      sections = Array.from(document.querySelectorAll('.section'))
+      window.addEventListener('wheel', handleScroll)
+      window.addEventListener('touchstart', handleTouchStart)
+      window.addEventListener('touchend', handleTouchEnd)
     })
 
     onBeforeUnmount(() => {
@@ -130,6 +127,6 @@ export default {
   overflow: hidden;
   padding-top: 60px;
   scroll-snap-align: start;
-  scroll-snap-stop: always; // 스크롤 스냅 강화
+  scroll-snap-stop: always;
 }
 </style>
