@@ -103,9 +103,16 @@
 
 <style lang="scss" scoped>
 .cases {
-  min-height: 150vh;
+  width: 100%;
   padding: 80px 0;
   background: white;
+  min-height: 100%;
+
+  .container {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 80px;
+  }
 
   h2 {
     text-align: center;

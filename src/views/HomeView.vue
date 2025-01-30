@@ -51,55 +51,49 @@ export default {
     let lastScrollTime = Date.now()
     let sections = []
     let footerElement = null
-    let isLastSection = false
-    const SCROLL_DELAY = 800 // 스크롤 딜레이 시간
+    const SCROLL_DELAY = 800
 
-    const checkScrollDirection = (event) => {
-      return event.wheelDelta > 0 ? 'up' : 'down'
+    const isElementInViewport = (el) => {
+      const rect = el.getBoundingClientRect()
+      return (
+        rect.top <= 0 && 
+        rect.bottom >= 0
+      )
     }
 
-    const isFooterVisible = () => {
-      if (!footerElement) return false
-      const rect = footerElement.getBoundingClientRect()
-      return rect.top <= window.innerHeight
+    const canScrollToNextSection = (currentSection) => {
+      const section = sections[currentSection]
+      if (!section) return false
+      
+      const sectionHeight = section.scrollHeight
+      const viewportHeight = window.innerHeight
+      const scrollTop = section.getBoundingClientRect().top
+      const scrolled = Math.abs(scrollTop)
+      
+      return scrolled >= (sectionHeight - viewportHeight)
     }
 
     const handleScroll = (event) => {
-      event.preventDefault()
-      
       const now = Date.now()
       if (isScrolling || now - lastScrollTime < SCROLL_DELAY) return
       
-      const direction = checkScrollDirection(event)
-      const isAtFooter = isFooterVisible()
+      const direction = event.wheelDelta > 0 ? 'up' : 'down'
+      const currentSectionEl = sections[currentSection]
 
-      // 푸터에서의 스크롤 처리
-      if (isAtFooter && direction === 'up') {
-        currentSection = sections.length - 1
-        smoothScroll(sections[currentSection])
-        isLastSection = true
+      // 현재 섹션이 뷰포트에 있고, 아직 섹션 끝까지 스크롤하지 않았다면
+      if (isElementInViewport(currentSectionEl) && !canScrollToNextSection(currentSection)) {
+        // 기본 스크롤 허용
         return
       }
 
-      // 마지막 섹션에서의 스크롤 처리
-      if (isLastSection) {
-        if (direction === 'up') {
-          currentSection--
-          smoothScroll(sections[currentSection])
-          isLastSection = false
-        } else if (!isAtFooter) {
-          footerElement?.scrollIntoView({ behavior: 'smooth' })
-        }
-        return
-      }
-
-      // 일반 섹션 스크롤 처리
+      // 이 시점에서는 섹션 전환이 필요하므로 기본 스크롤 방지
+      event.preventDefault()
+      
       if (direction === 'down' && currentSection < sections.length - 1) {
-        currentSection++
-        if (currentSection === sections.length - 1) {
-          isLastSection = true
+        if (canScrollToNextSection(currentSection)) {
+          currentSection++
+          smoothScroll(sections[currentSection])
         }
-        smoothScroll(sections[currentSection])
       } else if (direction === 'up' && currentSection > 0) {
         currentSection--
         smoothScroll(sections[currentSection])
@@ -209,9 +203,11 @@ export default {
   min-height: 100vh;
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 
   &:not(:first-of-type) {
     padding-top: 60px;
