@@ -1,15 +1,17 @@
 <template>
   <div class="home">
     <TheNavbar />
-    <HeroSection id="hero" class="section"/>
-    <FeaturesSection id="features" class="section"/>
-    <ServiceSection id="service" class="section"/>
-    <KioskSection id="kiosk" class="section"/>
-    <CasesSection id="cases" class="section"/>
-    <ReviewsSection id="reviews" class="section"/>
-    <ComparisonSection id="comparison" class="section"/>
-    <FaqSection id="faq" class="section"/>
-    <ContactSection id="contact" class="section"/>
+    <div class="sections-container">
+      <HeroSection id="hero" class="section"/>
+      <FeaturesSection id="features" class="section"/>
+      <ServiceSection id="service" class="section"/>
+      <KioskSection id="kiosk" class="section"/>
+      <CasesSection id="cases" class="section"/>
+      <ReviewsSection id="reviews" class="section"/>
+      <ComparisonSection id="comparison" class="section"/>
+      <FaqSection id="faq" class="section"/>
+      <ContactSection id="contact" class="section"/>
+    </div>
     <TheFooter />
   </div>
 </template>
@@ -148,8 +150,13 @@ export default {
   width: 100%;
   max-width: 1920px;
   margin: 0 auto;
-  overflow: hidden;
   background: white;
+}
+
+.sections-container {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
 }
 
 .section {
