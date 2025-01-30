@@ -70,7 +70,7 @@ export default {
   background-image: url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80');
   background-size: cover;
   background-position: center;
-  filter: brightness(0.3);
+  filter: brightness(0.5);
   z-index: 0;
 
   &::after {
@@ -80,7 +80,11 @@ export default {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, rgba(26, 35, 126, 0.9) 0%, rgba(40, 53, 147, 0.9) 100%);
+    background: linear-gradient(
+      135deg, 
+      rgba(26, 35, 126, 0.7) 0%,
+      rgba(40, 53, 147, 0.7) 100%
+    );
   }
 }
 

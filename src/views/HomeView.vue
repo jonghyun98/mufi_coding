@@ -145,18 +145,31 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  height: 100vh;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
   overflow: hidden;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  background: white;
 }
 
 .section {
-  min-height: 100vh;
+  aspect-ratio: 1920/1080;
+  width: 100%;
+  height: 100vh;
+  min-height: 1080px;
   position: relative;
-  overflow: hidden;
   padding-top: 60px;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 1920px) {
+  .section {
+    height: 100vh;
+    min-height: auto;
+    aspect-ratio: auto;
+  }
 }
 </style>
