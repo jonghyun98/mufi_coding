@@ -11,9 +11,10 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
+  min-height: 100vh;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: visible;
 }
 
 body {
@@ -36,7 +37,7 @@ h1, h2, h3, h4, h5, h6, p {
   min-height: 100vh;
   padding: 80px 20px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 
   @include mixins.mobile {
     padding: 60px 16px;

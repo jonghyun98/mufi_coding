@@ -72,12 +72,15 @@ export default {
 <style lang="scss" scoped>
 .home {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   background: white;
+  overflow-y: visible;
 }
 
 .sections-container {
   width: 100%;
+  height: auto;
+  overflow: visible;
 }
 
 .section {
@@ -85,6 +88,7 @@ export default {
   min-height: 100vh;
   position: relative;
   padding: 80px 0;
+  overflow: visible;
 
   &:first-of-type {
     padding-top: 0;
