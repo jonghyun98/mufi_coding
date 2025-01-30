@@ -49,25 +49,21 @@ export default {
     onMounted(() => {
       const sections = document.querySelectorAll('.section')
       
-      // Intersection Observer로 섹션 진입 감지
-      const observer = new IntersectionObserver(
+      // 네비게이션 바 색상 변경 Observer만 유지
+      const navObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              entry.target.classList.add('visible')
-              // 네비게이션 바 색상 변경 이벤트
               window.dispatchEvent(new CustomEvent('section-change', {
                 detail: { sectionId: entry.target.id }
               }))
             }
           })
         },
-        {
-          threshold: 0.2
-        }
+        { threshold: 0.5 }
       )
 
-      sections.forEach(section => observer.observe(section))
+      sections.forEach(section => navObserver.observe(section))
     })
   }
 }
@@ -77,24 +73,20 @@ export default {
 .home {
   width: 100%;
   background: white;
+  overflow-y: auto;
 }
 
 .sections-container {
   width: 100%;
+  height: auto;
+  position: relative;
 }
 
 .section {
   width: 100%;
   min-height: 100vh;
   position: relative;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease-out;
-
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  padding: 80px 0;
 
   &:first-of-type {
     padding-top: 0;
