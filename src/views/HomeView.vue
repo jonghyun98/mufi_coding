@@ -1,21 +1,21 @@
 <template>
   <div class="home">
     <TheNavbar />
-    <HeroSection id="hero"/>
-    <FeaturesSection id="features"/>
-    <ServiceSection id="service"/>
-    <KioskSection id="kiosk"/>
-    <CasesSection id="cases"/>
-    <ReviewsSection id="reviews"/>
-    <ComparisonSection id="comparison"/>
-    <FaqSection id="faq"/>
-    <ContactSection id="contact"/>
+    <HeroSection id="hero" class="section"/>
+    <FeaturesSection id="features" class="section"/>
+    <ServiceSection id="service" class="section"/>
+    <KioskSection id="kiosk" class="section"/>
+    <CasesSection id="cases" class="section"/>
+    <ReviewsSection id="reviews" class="section"/>
+    <ComparisonSection id="comparison" class="section"/>
+    <FaqSection id="faq" class="section"/>
+    <ContactSection id="contact" class="section"/>
     <TheFooter />
   </div>
 </template>
 
 <script>
-import { onMounted } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 import HeroSection from '@/components/home/HeroSection.vue'
 import FeaturesSection from '@/components/home/FeaturesSection.vue'
 import ServiceSection from '@/components/home/ServiceSection.vue'
@@ -44,8 +44,78 @@ export default {
     TheFooter
   },
   setup() {
+    let currentSection = 0
+    let isScrolling = false
+    let lastScrollTime = 0
+    let sections = []
+    let touchStartY = 0
+    let scrollTimeout = null
+
+    const handleScroll = (event) => {
+      event.preventDefault()
+      
+      if (isScrolling) return
+      
+      const now = Date.now()
+      if (now - lastScrollTime < 1000) return
+
+      lastScrollTime = now
+      const delta = event.wheelDelta || -event.detail
+
+      if (delta < 0 && currentSection < sections.length - 1) {
+        currentSection++
+        smoothScroll(sections[currentSection])
+      } else if (delta > 0 && currentSection > 0) {
+        currentSection--
+        smoothScroll(sections[currentSection])
+      }
+    }
+
+    const smoothScroll = (target) => {
+      if (isScrolling) return
+      
+      isScrolling = true
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+
+      clearTimeout(scrollTimeout)
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false
+      }, 1000)
+    }
+
+    const handleTouchStart = (event) => {
+      if (isScrolling) return
+      touchStartY = event.touches[0].clientY
+    }
+
+    const handleTouchEnd = (event) => {
+      if (isScrolling) return
+      
+      const touchEndY = event.changedTouches[0].clientY
+      const deltaY = touchEndY - touchStartY
+
+      if (Math.abs(deltaY) > 50) {
+        if (deltaY < 0 && currentSection < sections.length - 1) {
+          currentSection++
+          smoothScroll(sections[currentSection])
+        } else if (deltaY > 0 && currentSection > 0) {
+          currentSection--
+          smoothScroll(sections[currentSection])
+        }
+      }
+    }
+
     onMounted(() => {
-      // Intersection Observer 설정만 유지
+      sections = Array.from(document.querySelectorAll('.section'))
+      
+      window.addEventListener('wheel', handleScroll, { passive: false })
+      window.addEventListener('touchstart', handleTouchStart, { passive: true })
+      window.addEventListener('touchend', handleTouchEnd, { passive: true })
+
+      // Intersection Observer 설정
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
@@ -58,10 +128,16 @@ export default {
         threshold: 0.3
       })
 
-      // 모든 섹션에 observer 적용
-      document.querySelectorAll('section').forEach(section => {
+      sections.forEach(section => {
         observer.observe(section)
       })
+    })
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('wheel', handleScroll)
+      window.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchend', handleTouchEnd)
+      if (scrollTimeout) clearTimeout(scrollTimeout)
     })
   }
 }
@@ -69,15 +145,18 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  width: 100%;
-  min-height: 100%;
-  background: white;
+  height: 100vh;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
 }
 
-section {
+.section {
   min-height: 100vh;
   position: relative;
+  overflow: hidden;
   padding-top: 60px;
-  width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 </style>

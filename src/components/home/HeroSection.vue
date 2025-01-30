@@ -1,5 +1,6 @@
 <template>
   <section id="hero" class="hero">
+    <div class="hero-background"></div>
     <div class="hero-content">
       <div class="hero-text">
         <h1 class="fade-in-up">특별한 순간을 더욱 특별하게</h1>
@@ -39,14 +40,38 @@ export default {
 .hero {
   min-height: 100vh;
   width: 100%;
-  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  position: relative;
   display: flex;
   align-items: center;
-  position: relative;
   overflow: hidden;
 }
 
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80');
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.3);
+  z-index: 0;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(26, 35, 126, 0.9) 0%, rgba(40, 53, 147, 0.9) 100%);
+  }
+}
+
 .hero-content {
+  position: relative;
+  z-index: 1;
   @include mixins.container;
   display: grid;
   grid-template-columns: 1fr 1fr;
