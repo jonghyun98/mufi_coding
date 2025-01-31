@@ -56,7 +56,7 @@ export default {
 <style lang="scss" scoped>
 .features {
   padding: 5rem 0;
-  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  background: linear-gradient(135deg, #1F1F1F 0%, #2A2A2A 100%);
   color: white;
 
   h2 {

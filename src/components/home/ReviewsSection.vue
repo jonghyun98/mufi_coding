@@ -180,12 +180,4 @@
     margin-bottom: 1rem;
   }
 }
-
-.footer {
-  background: #1a237e;
-}
-
-.case-image {
-  background: linear-gradient(135deg, #1a237e, #283593);
-}
 </style> 

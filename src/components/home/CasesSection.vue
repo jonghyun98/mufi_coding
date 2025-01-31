@@ -278,7 +278,7 @@ export default {
   .case-image {
     width: 100%;
     height: 250px;
-    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    background: linear-gradient(135deg, #1F1F1F 0%, #232323 100%);
     margin-bottom: 1.5rem;
     overflow: hidden;
 
