@@ -222,4 +222,15 @@
     font-weight: bold;
   }
 }
+
+.comparison-section {
+  .highlight {
+    color: #1F1F1F;
+  }
+  .comparison-item {
+    &.active {
+      background-color: #1F1F1F;
+    }
+  }
+}
 </style> 

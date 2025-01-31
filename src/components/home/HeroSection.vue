@@ -83,8 +83,8 @@ export default {
     height: 100%;
     background: linear-gradient(
       135deg, 
-      rgba(26, 35, 126, 0.7) 0%,
-      rgba(40, 53, 147, 0.7) 100%
+      rgba(31, 31, 31, 0.7) 0%,
+      rgba(31, 31, 31, 0.7) 100%
     );
   }
 }
@@ -276,5 +276,9 @@ export default {
   &.students .icon {
     transform: rotate(-5deg);
   }
+}
+
+.hero-section {
+  background-color: #1F1F1F;
 }
 </style>

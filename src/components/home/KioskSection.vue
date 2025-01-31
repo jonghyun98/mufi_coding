@@ -77,7 +77,7 @@ export default {
 .kiosk {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  background: linear-gradient(135deg, #1F1F1F 0%, #1F1F1F 100%);
   color: white;
   position: relative;
   padding: 80px 0;
@@ -223,6 +223,17 @@ export default {
 
   .kiosk-buttons {
     flex-direction: column;
+  }
+}
+
+.kiosk-section {
+  .highlight {
+    color: #1F1F1F;
+  }
+  .feature-card {
+    &:hover {
+      border-color: #1F1F1F;
+    }
   }
 }
 </style> 
