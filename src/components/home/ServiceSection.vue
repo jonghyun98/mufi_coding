@@ -37,7 +37,7 @@ export default {
 
   h2 {
     text-align: center;
-    color: vars.$dark-color;
+    color: #1F1F1F;
     margin-bottom: 3rem;
     word-break: keep-all;
     word-wrap: break-word;
@@ -81,7 +81,7 @@ export default {
     padding: 2rem;
 
     h3 {
-      color: vars.$dark-color;
+      color: #1F1F1F;
       margin-bottom: 1rem;
       word-break: keep-all;
       word-wrap: break-word;
@@ -94,10 +94,10 @@ export default {
 
       li {
         margin: 0.5rem 0;
-        color: vars.$dark-color;
+        color: #1F1F1F;
         &:before {
           content: "•";
-          color: vars.$primary-color;
+          color: #1F1F1F;
           margin-right: 0.5rem;
         }
         word-break: keep-all;

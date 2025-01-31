@@ -123,12 +123,12 @@ ${this.form.message}
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: vars.$dark-color;
+    color: #1F1F1F;
   }
 
   .section-desc {
     text-align: center;
-    color: vars.$dark-color;
+    color: #1F1F1F;
     opacity: 0.8;
     margin-bottom: 3rem;
     font-size: 1.2rem;
@@ -168,19 +168,19 @@ ${this.form.message}
       h3 {
         font-size: 1.1rem;
         margin-bottom: 0.5rem;
-        color: vars.$dark-color;
+        color: #1F1F1F;
       }
 
       p {
-        color: vars.$dark-color;
+        color: #1F1F1F;
         opacity: 0.8;
         a {
-          color: vars.$dark-color;
+          color: #1F1F1F;
           text-decoration: none;
           transition: color 0.3s;
 
           &:hover {
-            color: vars.$primary-color;
+            color: #1F1F1F;
           }
         }
       }
@@ -200,7 +200,7 @@ ${this.form.message}
     label {
       display: block;
       margin-bottom: 0.5rem;
-      color: vars.$dark-color;
+      color: #1F1F1F;
       font-weight: 500;
     }
 
@@ -214,7 +214,7 @@ ${this.form.message}
 
       &:focus {
         outline: none;
-        border-color: vars.$primary-color;
+        border-color: #1F1F1F;
       }
     }
 

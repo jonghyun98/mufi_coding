@@ -75,12 +75,12 @@ export default {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: vars.$dark-color;
+    color: #1F1F1F;
   }
 
   .section-desc {
     text-align: center;
-    color: vars.$dark-color;
+    color: #1F1F1F;
     opacity: 0.8;
     margin-bottom: 3rem;
     font-size: 1.2rem;
@@ -140,7 +140,7 @@ export default {
     width: 24px;
     height: 24px;
     transition: transform 0.3s ease;
-    fill: vars.$dark-color;
+    fill: #1F1F1F;
   }
 }
 
@@ -153,7 +153,7 @@ export default {
 
   p {
     margin: 0;
-    color: vars.$dark-color;
+    color: #1F1F1F;
     line-height: 1.6;
   }
 }
@@ -164,7 +164,7 @@ export default {
 
   p {
     margin-bottom: 1rem;
-    color: vars.$dark-color;
+    color: #1F1F1F;
   }
 
   .btn.primary {

@@ -264,12 +264,12 @@ export default {
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: vars.$dark-color;
+    color: #1F1F1F;
   }
 
   .section-desc {
     text-align: center;
-    color: vars.$dark-color;
+    color: #1F1F1F;
     opacity: 0.8;
     margin-bottom: 3rem;
     font-size: 1.2rem;
@@ -329,12 +329,12 @@ export default {
   h3 {
     font-size: 1.5rem;
     margin: 0 0 0.5rem 0;
-    color: vars.$dark-color;
+    color: #1F1F1F;
     padding: 0 1.5rem;
   }
 
   p {
-    color: vars.$dark-color;
+    color: #1F1F1F;
     opacity: 0.8;
     margin-bottom: 1.5rem;
     line-height: 1.6;
@@ -360,13 +360,13 @@ export default {
       display: block;
       font-size: 1.5rem;
       font-weight: bold;
-      color: vars.$primary-color;
+      color: #1F1F1F;
     }
 
     .label {
       display: block;
       font-size: 0.9rem;
-      color: vars.$dark-color;
+      color: #1F1F1F;
       opacity: 0.8;
     }
   }
@@ -392,7 +392,7 @@ export default {
       transition: color 0.3s ease;
       
       &.animated {
-        color: vars.$primary-color;
+        color: #1F1F1F;
       }
     }
 

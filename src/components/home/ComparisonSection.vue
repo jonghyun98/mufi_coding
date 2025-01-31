@@ -95,12 +95,12 @@
     text-align: center;
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    color: vars.$dark-color;
+    color: #1F1F1F;
   }
 
   .section-desc {
     text-align: center;
-    color: vars.$dark-color;
+    color: #1F1F1F;
     opacity: 0.8;
     margin-bottom: 3rem;
     font-size: 1.2rem;
@@ -158,7 +158,7 @@
 
   .feature-name {
     font-weight: 500;
-    color: vars.$dark-color;
+    color: #1F1F1F;
   }
 
   .mufi-cell, .others-cell {
