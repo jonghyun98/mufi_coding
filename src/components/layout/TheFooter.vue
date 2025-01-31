@@ -70,9 +70,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/styles/variables' as vars;
-@use '@/assets/styles/mixins' as mixins;
-
 .footer {
   background: #1F1F1F;
   color: white;
