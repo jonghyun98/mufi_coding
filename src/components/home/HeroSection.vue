@@ -52,8 +52,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/styles/variables' as vars;
-@use '@/assets/styles/mixins' as mixins;
+@use '@/assets/styles/_variables' as *;
+@use '@/assets/styles/_mixins' as *;
 
 .hero {
   min-height: 100vh;
@@ -63,6 +63,7 @@ export default {
   align-items: center;
   overflow: hidden;
   padding-top: 60px;
+  background-color: $dark-color;
 }
 
 .hero-background {
@@ -71,7 +72,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&q=80');
+  background-image: url('@/assets/images/hero-bg.jpg');
   background-size: cover;
   background-position: center;
   filter: brightness(0.5);
@@ -86,8 +87,8 @@ export default {
     height: 100%;
     background: linear-gradient(
       135deg, 
-      rgba(31, 31, 31, 0.8) 0%,
-      rgba(40, 40, 40, 0.8) 100%
+      rgba($dark-color, 0.8) 0%,
+      rgba(lighten($dark-color, 5%), 0.8) 100%
     );
   }
 }
@@ -95,7 +96,7 @@ export default {
 .hero-content {
   position: relative;
   z-index: 1;
-  @include mixins.container;
+  @include container;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
@@ -140,7 +141,7 @@ export default {
 
     &.primary {
       background: white;
-      color: vars.$primary-color;
+      color: $primary-color;
     }
 
     &.secondary {
@@ -220,11 +221,12 @@ export default {
   }
 }
 
-@include mixins.mobile {
+@include mobile {
   .hero-content {
     grid-template-columns: 1fr;
     text-align: center;
     padding: 2rem 1rem;
+    gap: 2rem;
   }
 
   .hero-text {
@@ -240,6 +242,10 @@ export default {
   .hero-buttons {
     justify-content: center;
     flex-direction: column;
+    
+    .btn {
+      width: 100%;
+    }
   }
 
   .hero-image {

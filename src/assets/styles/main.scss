@@ -9,22 +9,23 @@
   box-sizing: border-box;
 }
 
-// App.vue에서 옮긴 스타일
 html, body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   height: 100%;
+  font-family: $font-family;
 }
 
 #app {
   min-height: 100vh;
   min-height: calc(var(--vh, 1vh) * 100);
   width: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  font-family: $font-family;
   line-height: 1.6;
   color: $dark-color;
   word-break: keep-all;
