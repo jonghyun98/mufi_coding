@@ -314,15 +314,7 @@ export default {
 }
 
 .case-item {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.5s ease-out;
-
-  &.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
+  display: block;
   background: white;
   border-radius: 15px;
   overflow: hidden;
@@ -387,7 +379,7 @@ export default {
   gap: 2rem;
   text-align: center;
   padding: 3rem;
-  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  background: vars.$primary-gradient;
   border-radius: 10px;
   color: white;
 

@@ -1,15 +1,23 @@
 @forward "sass:color";
 
 // Colors
-$primary-color: #FF6B6B !default;
+$primary-color: #EA4343;
 $secondary-color: #4ECDC4 !default;
-$dark-color: #2C3E50 !default;
-$light-color: #F7F9FC !default;
+$dark-color: #1F1F1F;
+$light-color: #FFFFFF;
+$gray-color: #F5F5F5;
+
+// Gradient
+$primary-gradient: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
+
+// Shadows
+$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+$hover-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 
 // Breakpoints
-$mobile: 768px !default;
-$tablet: 1024px !default;
-$desktop: 1200px !default;
+$mobile: 768px;
+$tablet: 1024px;
+$desktop: 1280px;
 
 // Typography
 $font-family: 'Noto Sans KR', sans-serif !default;
@@ -29,3 +37,8 @@ $spacing: (
   lg: 4rem,
   xl: 8rem
 );
+
+// Transitions
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+$transition-slow: 0.5s ease;
