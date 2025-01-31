@@ -8,7 +8,7 @@ $light-color: #FFFFFF;
 $gray-color: #F5F5F5;
 
 // Gradient
-$primary-gradient: linear-gradient(135deg, $primary-color 0%, color.adjust($primary-color, $lightness: -10%) 100%);
+$primary-gradient: linear-gradient(135deg, #1F1F1F 0%, #232323 100%);
 
 // Shadows
 $box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
