@@ -1,0 +1,23 @@
+{
+  "name": "mufi-landing",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "dependencies": {
+    "sass": "^1.83.4",
+    "vue": "^3.4.0",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "gh-pages": "^6.3.0",
+    "terser": "^5.37.0",
+    "vite": "^5.0.0"
+  }
+}
