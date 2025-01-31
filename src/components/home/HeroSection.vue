@@ -52,6 +52,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/variables' as vars;
+@use '@/assets/styles/mixins' as mixins;
+
 .hero {
   min-height: 100vh;
   width: 100%;

@@ -1,9 +1,9 @@
 @use "sass:color";
 
 // Colors
-$primary-color: #1F1F1F;
+$primary-color: #1F1F1F !default;
 $secondary-color: #4ECDC4 !default;
-$dark-color: #1F1F1F;
+$dark-color: #1F1F1F !default;
 $light-color: #FFFFFF;
 $gray-color: #F5F5F5;
 

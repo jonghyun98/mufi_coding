@@ -76,6 +76,9 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/variables' as vars;
+@use '@/assets/styles/mixins' as mixins;
+
 .reviews {
   background: #1F1F1F;
   padding: 5rem 0;

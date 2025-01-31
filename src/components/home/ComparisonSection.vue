@@ -87,6 +87,9 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/variables' as vars;
+@use '@/assets/styles/mixins' as mixins;
+
 .comparison {
   background: white;
   padding: 5rem 0;
