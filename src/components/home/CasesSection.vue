@@ -69,19 +69,85 @@
             </div>
           </div>
         </div>
+
+        <div class="case-item">
+          <div class="case-image">
+            <img :src="skkuImage" alt="성균관대학교" />
+          </div>
+          <h3>성균관대학교</h3>
+          <p>2023 대동제에서 학생들의 뜨거운 호응</p>
+          <div class="case-stats">
+            <div class="stat">
+              <span class="value">2,200+</span>
+              <span class="label">이용자</span>
+            </div>
+            <div class="stat">
+              <span class="value">4일</span>
+              <span class="label">기간</span>
+            </div>
+            <div class="stat">
+              <span class="value">97%</span>
+              <span class="label">만족도</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-item">
+          <div class="case-image">
+            <img :src="yonseiImage" alt="연세대학교" />
+          </div>
+          <h3>연세대학교</h3>
+          <p>2023 축제 현장의 새로운 경험</p>
+          <div class="case-stats">
+            <div class="stat">
+              <span class="value">1,900+</span>
+              <span class="label">이용자</span>
+            </div>
+            <div class="stat">
+              <span class="value">3일</span>
+              <span class="label">기간</span>
+            </div>
+            <div class="stat">
+              <span class="value">98%</span>
+              <span class="label">만족도</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="case-item">
+          <div class="case-image">
+            <img :src="khuImage" alt="경희대학교" />
+          </div>
+          <h3>경희대학교</h3>
+          <p>2023 대동제의 혁신적인 변화</p>
+          <div class="case-stats">
+            <div class="stat">
+              <span class="value">1,700+</span>
+              <span class="label">이용자</span>
+            </div>
+            <div class="stat">
+              <span class="value">3일</span>
+              <span class="label">기간</span>
+            </div>
+            <div class="stat">
+              <span class="value">96%</span>
+              <span class="label">만족도</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="cases-summary">
         <div class="summary-item">
-          <span class="number">20+</span>
+          <span class="number" ref="installCount">{{ currentInstalls }}+</span>
           <span class="text">대학교 설치</span>
         </div>
         <div class="summary-item">
-          <span class="number">50,000+</span>
+          <span class="number" ref="userCount">{{ currentUsers }}+</span>
           <span class="text">누적 이용자</span>
         </div>
         <div class="summary-item">
-          <span class="number">96%</span>
+          <span class="number" ref="satisfactionCount">{{ currentSatisfaction }}%</span>
           <span class="text">평균 만족도</span>
         </div>
       </div>
@@ -93,6 +159,9 @@
 import chungbukImage from '@/assets/images/chungbuk.png'
 import hufsImage from '@/assets/images/hufs.png'
 import seoulTechImage from '@/assets/images/seoultech.png'
+import skkuImage from '@/assets/images/skku.png'
+import yonseiImage from '@/assets/images/yonsei.png'
+import khuImage from '@/assets/images/khu.png'
 
 export default {
   name: 'CasesSection',
@@ -100,7 +169,77 @@ export default {
     return {
       chungbukImage,
       hufsImage,
-      seoulTechImage
+      seoulTechImage,
+      skkuImage,
+      yonseiImage,
+      khuImage,
+      currentInstalls: 0,
+      currentUsers: 0,
+      currentSatisfaction: 0,
+      targetInstalls: 30,
+      targetUsers: 80000,
+      targetSatisfaction: 97,
+      animationStarted: false
+    }
+  },
+  mounted() {
+    // Intersection Observer 설정
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.animationStarted) {
+            this.animationStarted = true
+            this.startCountAnimation()
+          }
+        })
+      },
+      {
+        threshold: 0.5
+      }
+    )
+
+    // summary 섹션 관찰 시작
+    const summary = document.querySelector('.cases-summary')
+    if (summary) {
+      observer.observe(summary)
+    }
+  },
+  methods: {
+    startCountAnimation() {
+      // 설치 수 애니메이션
+      this.animateNumber(0, this.targetInstalls, 2000, (value) => {
+        this.currentInstalls = Math.round(value)
+      })
+      
+      // 이용자 수 애니메이션
+      this.animateNumber(0, this.targetUsers, 2000, (value) => {
+        this.currentUsers = Math.round(value)
+      })
+      
+      // 만족도 애니메이션
+      this.animateNumber(0, this.targetSatisfaction, 2000, (value) => {
+        this.currentSatisfaction = Math.round(value)
+      })
+    },
+    animateNumber(start, end, duration, callback) {
+      const startTime = performance.now()
+      
+      const updateNumber = (currentTime) => {
+        const elapsed = currentTime - startTime
+        const progress = Math.min(elapsed / duration, 1)
+        
+        // easeOutExpo 이징 함수 적용
+        const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress)
+        const currentValue = start + (end - start) * easeProgress
+        
+        callback(currentValue)
+        
+        if (progress < 1) {
+          requestAnimationFrame(updateNumber)
+        }
+      }
+      
+      requestAnimationFrame(updateNumber)
     }
   }
 }
@@ -246,6 +385,11 @@ export default {
       font-size: 2.5rem;
       font-weight: bold;
       margin-bottom: 0.5rem;
+      transition: color 0.3s ease;
+      
+      &.animated {
+        color: vars.$primary-color;
+      }
     }
 
     .text {
