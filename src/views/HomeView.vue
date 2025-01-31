@@ -74,6 +74,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/_mixins' as *;
+
 .home {
   width: 100%;
   height: 100%;
@@ -99,7 +101,7 @@ export default {
   }
 }
 
-@include mixins.mobile {
+@include mobile {
   .section {
     padding-top: 60px;
   }
