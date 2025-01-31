@@ -248,6 +248,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/_variables' as vars;
+@use '@/assets/styles/_mixins' as mixins;
+
 .cases {
   width: 100%;
   padding: 80px 0;
