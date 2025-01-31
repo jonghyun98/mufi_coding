@@ -70,6 +70,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/_variables' as *;
+@use '@/assets/styles/_mixins' as *;
+
 .footer {
   background: #1F1F1F;
   color: white;
@@ -171,7 +174,7 @@ export default {
   }
 }
 
-@include mixins.mobile {
+@include mobile {
   .footer {
     padding: 3rem 1rem 1.5rem;
 

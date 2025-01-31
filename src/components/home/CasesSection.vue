@@ -248,8 +248,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/styles/_variables' as vars;
-@use '@/assets/styles/_mixins' as mixins;
+@use '@/assets/styles/_variables' as *;
+@use '@/assets/styles/_mixins' as *;
 
 .cases {
   width: 100%;
@@ -410,7 +410,7 @@ export default {
   color: #1F1F1F;
 }
 
-@include mixins.mobile {
+@include mobile {
   .cases {
     padding: 60px 20px;
 

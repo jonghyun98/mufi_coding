@@ -87,6 +87,9 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/_variables' as *;
+@use '@/assets/styles/_mixins' as *;
+
 .comparison {
   background: white;
   padding: 5rem 0;
@@ -203,7 +206,7 @@
   }
 }
 
-@include mixins.mobile {
+@include mobile {
   .comparison-table {
     margin: 0 1rem;
     font-size: 0.9rem;

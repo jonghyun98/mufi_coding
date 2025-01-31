@@ -76,6 +76,9 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/styles/_variables' as *;
+@use '@/assets/styles/_mixins' as *;
+
 .reviews {
   background: #1F1F1F;
   padding: 5rem 0;
@@ -170,7 +173,7 @@
   opacity: 0.9;
 }
 
-@include mixins.mobile {
+@include mobile {
   .reviews-grid {
     grid-template-columns: 1fr;
     padding: 0 1rem;

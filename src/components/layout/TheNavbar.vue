@@ -52,8 +52,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@use '@/assets/styles/_variables' as vars;
-@use '@/assets/styles/_mixins' as mixins;
+@use '@/assets/styles/_variables' as *;
+@use '@/assets/styles/_mixins' as *;
 
 .navbar {
   position: fixed;
@@ -151,7 +151,7 @@ export default {
     display: none;
   }
 
-  @include mixins.mobile {
+  @include mobile {
     height: 60px;
     
     .container {
