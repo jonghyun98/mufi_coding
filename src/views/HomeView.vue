@@ -53,22 +53,17 @@ export default {
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach(entry => {
-            // 섹션이 화면에 진입할 때만 애니메이션 적용
             if (entry.isIntersecting) {
               entry.target.classList.add('visible')
-              // 네비게이션 바 색상 변경
               window.dispatchEvent(new CustomEvent('section-change', {
                 detail: { sectionId: entry.target.id }
               }))
-            } else {
-              // 섹션이 화면에서 벗어나면 클래스 제거
-              entry.target.classList.remove('visible')
             }
           })
         },
         {
-          threshold: 0.2, // 20% 이상 보일 때
-          rootMargin: '-10% 0px' // 상하 여백 조정
+          threshold: 0.2,
+          rootMargin: '-10% 0px'
         }
       )
 

@@ -183,26 +183,28 @@ export default {
     }
   },
   mounted() {
-    // Intersection Observer 설정
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting && !this.animationStarted) {
-            this.animationStarted = true
-            this.startCountAnimation()
-          }
-        })
-      },
-      {
-        threshold: 0.5
-      }
-    )
+    // 컴포넌트가 마운트되면 애니메이션 시작
+    this.$nextTick(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !this.animationStarted) {
+              this.animationStarted = true
+              this.startCountAnimation()
+            }
+          })
+        },
+        {
+          threshold: 0.5,
+          rootMargin: '0px'
+        }
+      )
 
-    // summary 섹션 관찰 시작
-    const summary = document.querySelector('.cases-summary')
-    if (summary) {
-      observer.observe(summary)
-    }
+      const summary = this.$el.querySelector('.cases-summary')
+      if (summary) {
+        observer.observe(summary)
+      }
+    })
   },
   methods: {
     startCountAnimation() {
@@ -306,11 +308,21 @@ export default {
 
 .cases-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+  margin-bottom: 4rem;
 }
 
 .case-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s ease-out;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   background: white;
   border-radius: 15px;
   overflow: hidden;
@@ -424,7 +436,6 @@ export default {
 
   .cases-grid {
     grid-template-columns: 1fr;
-    padding: 0 1rem;
   }
 
   .cases-summary {
