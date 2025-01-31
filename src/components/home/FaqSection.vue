@@ -170,7 +170,7 @@ export default {
   .btn.primary {
     padding: 1rem 2rem;
     font-size: 1.1rem;
-    background: vars.$primary-color;
+    background: #1F1F1F;
     color: white;
     border: none;
     border-radius: 25px;

@@ -161,7 +161,7 @@ ${this.form.message}
       width: 32px;
       height: 32px;
       margin-right: 1rem;
-      fill: vars.$primary-color;
+      fill: #1F1F1F;
     }
 
     .info-content {
@@ -227,7 +227,7 @@ ${this.form.message}
     width: 100%;
     padding: 1rem;
     font-size: 1.1rem;
-    background: vars.$primary-color;
+    background: #1F1F1F;
     color: white;
     border: none;
     border-radius: 5px;

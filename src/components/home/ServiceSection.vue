@@ -68,7 +68,7 @@ export default {
     .placeholder-image {
       width: 100%;
       height: 100%;
-      background: linear-gradient(45deg, vars.$primary-color, color.adjust(vars.$primary-color, $lightness: 20%));
+      background: linear-gradient(45deg, #1F1F1F, #232323);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -108,13 +108,13 @@ export default {
     .learn-more {
       display: inline-block;
       margin-top: 1rem;
-      color: vars.$primary-color;
+      color: #1F1F1F;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
 
       &:hover {
-        color: color.adjust(vars.$primary-color, $lightness: -10%);
+        color: #232323;
       }
     }
   }

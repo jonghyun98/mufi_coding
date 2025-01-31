@@ -117,7 +117,7 @@ export default {
     height: 100%;
     
     a {
-      color: vars.$dark-color;
+      color: #1F1F1F;
       text-decoration: none;
       transition: color 0.3s;
       word-break: keep-all;
@@ -125,7 +125,7 @@ export default {
       font-size: 1.1rem;
       
       &:hover {
-        color: vars.$primary-color;
+        color: #232323;
       }
       
       &.contact-btn {

@@ -379,7 +379,7 @@ export default {
   gap: 2rem;
   text-align: center;
   padding: 3rem;
-  background: vars.$primary-gradient;
+  background: linear-gradient(135deg, #1F1F1F 0%, #232323 100%);
   border-radius: 10px;
   color: white;
 
@@ -401,6 +401,10 @@ export default {
       opacity: 0.9;
     }
   }
+}
+
+.stat .value {
+  color: #1F1F1F;
 }
 
 @include mixins.mobile {
