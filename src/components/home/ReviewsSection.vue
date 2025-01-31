@@ -102,7 +102,7 @@
 }
 
 .review-card {
-  background: linear-gradient(135deg, #1F1F1F 0%, #1F1F1F 100%);
+  background: rgba(37, 37, 37, 0.3);
   padding: 2rem;
   border-radius: 10px;
   backdrop-filter: blur(10px);
@@ -179,5 +179,13 @@
   .review-card {
     margin-bottom: 1rem;
   }
+}
+
+.footer {
+  background: #1a237e;
+}
+
+.case-image {
+  background: linear-gradient(135deg, #1a237e, #283593);
 }
 </style> 

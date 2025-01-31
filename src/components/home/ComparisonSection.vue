@@ -118,7 +118,7 @@
 .table-header {
   display: grid;
   grid-template-columns: 1.5fr 1fr 1fr;
-  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  background: linear-gradient(135deg, #1F1F1F 0%, #232323 100%);
   color: white;
 
   .header-cell {

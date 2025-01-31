@@ -83,8 +83,8 @@ export default {
     height: 100%;
     background: linear-gradient(
       135deg, 
-      rgba(31, 31, 31, 0.7) 0%,
-      rgba(31, 31, 31, 0.7) 100%
+      rgba(31, 31, 31, 0.8) 0%,
+      rgba(40, 40, 40, 0.8) 100%
     );
   }
 }

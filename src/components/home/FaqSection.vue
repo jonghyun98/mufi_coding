@@ -107,7 +107,7 @@ export default {
 
   &.active {
     .faq-header {
-      background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+      background: linear-gradient(135deg, #1F1F1F 0%, #252525 100%);
       color: white;
 
       .icon {

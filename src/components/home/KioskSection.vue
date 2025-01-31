@@ -77,7 +77,7 @@ export default {
 .kiosk {
   width: 100%;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1F1F1F 0%, #1F1F1F 100%);
+  background: linear-gradient(135deg, #1F1F1F 0%, #282828 100%);
   color: white;
   position: relative;
   padding: 80px 0;

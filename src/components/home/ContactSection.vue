@@ -149,7 +149,7 @@ ${this.form.message}
     align-items: center;
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background: rgba(26, 35, 126, 0.05);
+    background: rgba(31, 31, 31, 0.05);
     border-radius: 10px;
     transition: transform 0.3s;
 
