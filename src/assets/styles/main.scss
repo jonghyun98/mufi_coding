@@ -49,7 +49,7 @@ h1, h2, h3, h4, h5, h6, p {
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
   will-change: opacity, transform;
 
-  @include mixins.mobile {
+  @include mobile {
     padding: 60px 16px;
   }
 
@@ -66,7 +66,7 @@ h1, h2, h3, h4, h5, h6, p {
   margin: 0 auto;
   padding: 0 20px;
 
-  @include mixins.mobile {
+  @include mobile {
     padding: 0 16px;
   }
 }
