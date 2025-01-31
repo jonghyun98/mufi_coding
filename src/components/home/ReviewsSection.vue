@@ -77,7 +77,7 @@
 
 <style lang="scss" scoped>
 .reviews {
-  background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+  background: #1F1F1F;
   padding: 5rem 0;
   color: white;
 
@@ -102,7 +102,7 @@
 }
 
 .review-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #1F1F1F 0%, #1F1F1F 100%);
   padding: 2rem;
   border-radius: 10px;
   backdrop-filter: blur(10px);
