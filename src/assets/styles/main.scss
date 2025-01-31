@@ -1,3 +1,6 @@
+@use '@/assets/styles/_variables' as *;
+@use '@/assets/styles/_mixins' as *;
+
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
 * {
@@ -21,9 +24,9 @@ html, body {
 }
 
 body {
-  font-family: vars.$font-family;
+  font-family: $font-family;
   line-height: 1.6;
-  color: vars.$dark-color;
+  color: $dark-color;
   word-break: keep-all;
   word-wrap: break-word;
   -webkit-overflow-scrolling: touch;
