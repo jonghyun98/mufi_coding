@@ -25,20 +25,5 @@ export default {
 </script>
 
 <style lang="scss">
-@use '@/assets/styles/variables' as vars;
-@use '@/assets/styles/mixins' as mixins;
-
-// 전역 스타일은 main.scss로 이동
-html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden; // 풀페이지 스크롤을 위해 필요
-  height: 100%;
-}
-
-#app {
-  min-height: 100vh; /* fallback */
-  min-height: calc(var(--vh, 1vh) * 100);
-  width: 100%;
-}
+// 전역 스타일은 main.scss에서 관리
 </style>
