@@ -71,7 +71,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  background: #1a237e;
+  background: #1F1F1F;
   color: white;
   padding: 4rem 0 2rem;
 
@@ -153,7 +153,7 @@ export default {
         background: white;
         
         svg {
-          fill: #1a237e;
+          fill: #1F1F1F;
         }
       }
     }

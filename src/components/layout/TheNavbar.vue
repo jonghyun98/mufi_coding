@@ -83,15 +83,15 @@ export default {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
     .logo {
-      color: vars.$primary-color;
+      color: #1F1F1F;
     }
 
     .nav-links {
       a {
-        color: vars.$dark-color;
+        color: #1F1F1F;
 
         &:hover {
-          color: vars.$primary-color;
+          color: #232323;
         }
       }
     }
@@ -129,14 +129,14 @@ export default {
       }
       
       &.contact-btn {
-        background: vars.$primary-color;
+        background: #1F1F1F;
         color: white;
         padding: 0.8rem 2rem;
         border-radius: 30px;
         font-weight: 500;
         
         &:hover {
-          background: color.adjust(vars.$primary-color, $lightness: -10%);
+          background: #232323;
           transform: translateY(-2px);
           transition: all 0.3s ease;
         }
