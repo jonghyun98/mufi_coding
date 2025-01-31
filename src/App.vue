@@ -25,6 +25,9 @@ export default {
 </script>
 
 <style lang="scss">
+@use '@/assets/styles/variables' as vars;
+@use '@/assets/styles/mixins' as mixins;
+
 // 전역 스타일은 main.scss로 이동
 html, body {
   margin: 0;
